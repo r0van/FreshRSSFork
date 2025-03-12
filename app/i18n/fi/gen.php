@@ -94,7 +94,7 @@ return array(
 		'feb' => 'helmi',
 		'february' => 'helmikuu',
 		'format_date' => 'j\\. %s\\t\\a Y',
-		'format_date_hour' => 'j\\. %s\\t\\a Y klo H\\:i',
+		'format_date_hour' => 'j\\. %s\\t\\a Y \\k\\l\\o H\\:i',
 		'fri' => 'pe',
 		'jan' => 'tammi',
 		'january' => 'tammikuu',
