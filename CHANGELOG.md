@@ -2,7 +2,7 @@
 
 See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 
-## 2025-03-XX FreshRSS 1.26.1-dev
+## 2025-03-13 FreshRSS 1.26.1
 
 * Features
 	* Add cURL version to page about system information [#7409](https://github.com/FreshRSS/FreshRSS/pull/7409)
