@@ -72,7 +72,7 @@
 	box-shadow: 0 2px 5px #ffb6c1;
 }
 
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	color: #787394;
 }
 

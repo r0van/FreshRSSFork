@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Précédent',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => 'Bouton « Marquer tout comme lu »',
+		'big' => 'Gros',
+		'none' => 'Aucun',
+		'small' => 'Petit',
+	),
 	'privacy' => array(
 		'_' => 'Vie privée',
 		'retrieve_extension_list' => 'Récupération de la liste des extensions',

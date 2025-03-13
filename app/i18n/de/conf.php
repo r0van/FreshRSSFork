@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Vorherige',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '„Alle als gelesen markieren“ Button',
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privatsphäre',
 		'retrieve_extension_list' => 'Erweiterungsliste abrufen',

@@ -99,6 +99,12 @@ return array(
 			'previous' => '이전',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“모두 읽음으로 표시” button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privacy',	// TODO
 		'retrieve_extension_list' => 'Retrieve extension list',	// TODO

@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Előző',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“Mark all as read” button',	// TODO
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Adatvédelem',
 		'retrieve_extension_list' => 'Kiterjesztés lista beszerzése',

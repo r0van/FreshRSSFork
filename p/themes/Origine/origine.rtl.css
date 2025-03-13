@@ -979,7 +979,7 @@ a:hover .icon {
 }
 
 /*=== "Load more" part */
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	color: var(--font-color-grey);
 	text-align: center;
 	text-decoration: none;

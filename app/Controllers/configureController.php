@@ -131,6 +131,8 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 			FreshRSS_Context::userConf()->lazyload = Minz_Request::paramBoolean('lazyload');
 			FreshRSS_Context::userConf()->sides_close_article = Minz_Request::paramBoolean('sides_close_article');
 			FreshRSS_Context::userConf()->sticky_post = Minz_Request::paramBoolean('sticky_post');
+			$markReadButton = Minz_Request::paramStringNull('mark_read_button', plaintext: true);
+			FreshRSS_Context::userConf()->mark_read_button = in_array($markReadButton, ['big', 'small', 'none'], true) ? $markReadButton : 'big';
 			FreshRSS_Context::userConf()->reading_confirm = Minz_Request::paramBoolean('reading_confirm');
 			FreshRSS_Context::userConf()->auto_remove_article = Minz_Request::paramBoolean('auto_remove_article');
 			FreshRSS_Context::userConf()->mark_updated_article_unread = Minz_Request::paramBoolean('mark_updated_article_unread');

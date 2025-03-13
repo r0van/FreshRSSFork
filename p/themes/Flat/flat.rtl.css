@@ -834,7 +834,7 @@ th {
 }
 
 /*=== "Load more" part */
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	text-align: center;
 	text-decoration: none;
 	background: #ecf0f1;

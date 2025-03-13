@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Edellinen',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“merkitse kaikki luetuiksi” button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Tietosuoja',
 		'retrieve_extension_list' => 'Nouda laajennusluettelo',

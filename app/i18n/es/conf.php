@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Anterior',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“marcar todos como leídos” button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privacy',	// TODO
 		'retrieve_extension_list' => 'Retrieve extension list',	// TODO

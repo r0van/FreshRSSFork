@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Iepriekšējais',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '"atzīmēt visus kā izlasītus" button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privacy',	// TODO
 		'retrieve_extension_list' => 'Retrieve extension list',	// TODO

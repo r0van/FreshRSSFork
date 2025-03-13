@@ -99,6 +99,12 @@ return array(
 			'previous' => '上一页',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“全部标记为已读” button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privacy',	// TODO
 		'retrieve_extension_list' => 'Retrieve extension list',	// TODO

@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Önceki',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '“Hepsini okundu say” button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Gizlilik',
 		'retrieve_extension_list' => 'Uzantı listesini al',

@@ -50,6 +50,7 @@ declare(strict_types=1);
  * @property bool $icons_as_emojis
  * @property int $simplify_over_n_feeds
  * @property bool $show_nav_buttons
+ * @property 'big'|'small'|'none' $mark_read_button
  * @property 'ASC'|'DESC' $sort_order
  * @property 'id'|'date'|'link'|'title'|'rand' $sort
  * @property array<int,array<string,string>> $sharing

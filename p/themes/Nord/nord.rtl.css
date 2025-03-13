@@ -940,7 +940,7 @@ li.item.active {
 	background-color: var(--main-background);
 }
 
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	text-decoration: none;
 }
 

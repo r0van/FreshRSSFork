@@ -812,16 +812,16 @@ form th {
 .notification.bad a.close:hover {
 	background-color: var(--color-background-bad);
 }
-.notification .close {
+.notification a.close {
 	display: none;
 }
 
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	text-align: center;
 	text-decoration: none;
 	background: var(--color-background-light-darker);
 }
-#bigMarkAsRead:hover {
+#bigMarkAsRead.big:hover {
 	background-color: var(--color-background-aside);
 	color: var(--color-text-light);
 }
@@ -1027,15 +1027,15 @@ a.signin {
 	.notification {
 		width: 100%;
 	}
-	.notification .close {
+	.notification a.close {
 		background: transparent;
 		display: block;
 		right: 0;
 	}
-	.notification .close:hover {
+	.notification a.close:hover {
 		opacity: 0.5;
 	}
-	.notification .close .icon {
+	.notification a.close .icon {
 		display: none;
 	}
 	#nav_entries {

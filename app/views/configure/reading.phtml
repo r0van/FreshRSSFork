@@ -56,6 +56,17 @@
 			</div>
 
 			<div class="form-group">
+				<label class="group-name" for="mark_read_button"><?= _t('conf.mark_read_button') ?></label>
+				<div class="group-controls">
+					<select name="mark_read_button" id="mark_read_button" data-leave-validation="<?= FreshRSS_Context::userConf()->mark_read_button ?>">
+						<option value="big"<?= FreshRSS_Context::userConf()->mark_read_button === 'big' ? ' selected="selected"' : '' ?>><?= _t('conf.mark_read_button.big') ?></option>
+						<option value="small"<?= FreshRSS_Context::userConf()->mark_read_button === 'small' ? ' selected="selected"' : '' ?>><?= _t('conf.mark_read_button.small') ?></option>
+						<option value="none"<?= FreshRSS_Context::userConf()->mark_read_button === 'none' ? ' selected="selected"' : '' ?>><?= _t('conf.mark_read_button.none') ?></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
 				<label class="group-name" for="sort_order"><?= _t('conf.reading.sort') ?></label>
 				<div class="group-controls">
 					<select name="sort_order" id="sort_order" data-leave-validation="<?= FreshRSS_Context::userConf()->sort_order ?>">

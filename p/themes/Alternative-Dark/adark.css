@@ -924,7 +924,7 @@ kbd {
 }
 
 /*=== "Load more" part */
-#bigMarkAsRead {
+#bigMarkAsRead.big {
 	background: var(--background-color-dark);
 	color: var(--font-color-contrast);
 	text-align: center;

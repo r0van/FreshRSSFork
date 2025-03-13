@@ -99,6 +99,12 @@ return array(
 			'previous' => 'Предыдущая',
 		),
 	),
+	'mark_read_button' => array(
+		'_' => '«отметить всё прочитанным» button',	// DIRTY
+		'big' => 'Big',	// TODO
+		'none' => 'None',	// TODO
+		'small' => 'Small',	// TODO
+	),
 	'privacy' => array(
 		'_' => 'Privacy',	// TODO
 		'retrieve_extension_list' => 'Retrieve extension list',	// TODO
