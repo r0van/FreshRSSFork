@@ -14,7 +14,7 @@ Il est toutefois de votre responsabilité de vérifier que votre hébergement pe
 
 ## Choisir la bonne version de FreshRSS
 
-FreshRSS possède trois versions différentes (nous parlons de branches) qui sortent à des fréquences plus ou moins rapides. Aussi prenez le temps de comprendre à quoi correspond chacune de ces versions.
+FreshRSS possède deux versions différentes (nous parlons de branches) qui sortent à des fréquences plus ou moins rapides. Aussi prenez le temps de comprendre à quoi correspond chacune de ces versions.
 
 ### La version stable
 

@@ -22,6 +22,7 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Added API password indicator [#7340](https://github.com/FreshRSS/FreshRSS/pull/7340)
 * I18n
 	* Fix (es, fa, sk): do not translate XPath code [#7404](https://github.com/FreshRSS/FreshRSS/pull/7404)
+	* Fix date bug in Finish [#7423](https://github.com/FreshRSS/FreshRSS/pull/7423)
 	* Add Portuguese from Portugal [#7329](https://github.com/FreshRSS/FreshRSS/pull/7329)
 	* Improve Hungarian [#7391](https://github.com/FreshRSS/FreshRSS/pull/7391)
 * Misc.
