@@ -2,7 +2,14 @@
 
 See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 
-## 2025-XX-XX FreshRSS 1.26.2-dev
+## 2025-0X-XX FreshRSS 1.26.2-dev
+
+* Features
+	* Implement JSON string concatenation with & operator [#7414](https://github.com/FreshRSS/FreshRSS/pull/7414)
+* Deployment
+	* Apache: add check for `mod_filter` to ensure that `AddOutputFilterByType` works [#7419](https://github.com/FreshRSS/FreshRSS/pull/7419)
+* UI
+	* New size option for the *Mark as read* button [#7314](https://github.com/FreshRSS/FreshRSS/pull/7314)
 
 
 ## 2025-03-13 FreshRSS 1.26.1
