@@ -223,7 +223,7 @@ return array(
 		'back_to_manage' => '← Revenir à la liste des utilisateurs',
 		'create' => 'Créer un nouvel utilisateur',
 		'database_size' => 'Volumétrie',
-		'email' => 'adresse électronique',
+		'email' => 'Adresse électronique',
 		'enabled' => 'Actif',
 		'feed_count' => 'Flux',
 		'is_admin' => 'Admin',
