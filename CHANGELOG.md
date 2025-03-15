@@ -10,6 +10,9 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Apache: add check for `mod_filter` to ensure that `AddOutputFilterByType` works [#7419](https://github.com/FreshRSS/FreshRSS/pull/7419)
 * UI
 	* New size option for the *Mark as read* button [#7314](https://github.com/FreshRSS/FreshRSS/pull/7314)
+* SimplePie
+	* Merged upstream [#7434](https://github.com/FreshRSS/FreshRSS/pull/7434)
+		* Upstream fix [simplepie#912](https://github.com/simplepie/simplepie/pull/912)
 
 
 ## 2025-03-13 FreshRSS 1.26.1
@@ -360,7 +363,7 @@ Security
 	* Fix shortcut for clipboard sharing [#6277](https://github.com/FreshRSS/FreshRSS/pull/6277)
 	* Fix user-query filter display [#6421](https://github.com/FreshRSS/FreshRSS/pull/6421)
 * SimplePie
-	* Fix absolutize URL for several cases [#6270](https://github.com/FreshRSS/FreshRSS/pull/6270), [simplepie/#861](https://github.com/simplepie/simplepie/pull/861)
+	* Fix absolutize URL for several cases [#6270](https://github.com/FreshRSS/FreshRSS/pull/6270), [simplepie#861](https://github.com/simplepie/simplepie/pull/861)
 * Security
 	* Replace `iframe` `allow` attribute [#6274](https://github.com/FreshRSS/FreshRSS/pull/6274)
 * Deployment
