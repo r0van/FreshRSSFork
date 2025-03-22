@@ -47,7 +47,7 @@ input, select, textarea {
 	border-left-color: #ddd;
 	border-radius: 5px;
 	min-height: 25px;
-	line-height: 25px;
+	line-height: 1;
 	vertical-align: middle;
 }
 
@@ -174,7 +174,7 @@ th {
 
 .btn {
 	margin: 0;
-	padding: 5px 10px;
+	padding: 0.25rem 0.5rem;
 	background: #3498db;
 	color: #fff;
 	font-size: 0.9rem;
