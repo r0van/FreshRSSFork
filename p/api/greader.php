@@ -576,7 +576,7 @@ final class GReaderAPI {
 
 	/**
 	 * @param 'A'|'c'|'f'|'s' $type
-	 * @phpstan-return array{'A'|'c'|'f'|'s'|'t',int,int,FreshRSS_BooleanSearch}
+	 * @return array{'A'|'c'|'f'|'s'|'t',int,int,FreshRSS_BooleanSearch}
 	 */
 	private static function streamContentsFilters(string $type, int|string $streamId,
 		string $filter_target, string $exclude_target, int $start_time, int $stop_time): array {
@@ -586,19 +586,19 @@ final class GReaderAPI {
 					$feedDAO = FreshRSS_Factory::createFeedDao();
 					$streamId = htmlspecialchars($streamId, ENT_COMPAT, 'UTF-8');
 					$feed = $feedDAO->searchByUrl($streamId);
-					$streamId = $feed == null ? 0 : $feed->id();
+					$streamId = $feed === null ? -1 : $feed->id();
 				}
 				break;
 			case 'c':	//category or label
 				$categoryDAO = FreshRSS_Factory::createCategoryDao();
 				$streamId = htmlspecialchars((string)$streamId, ENT_COMPAT, 'UTF-8');
 				$cat = $categoryDAO->searchByName($streamId);
-				if ($cat != null) {
+				if ($cat !== null) {
 					$streamId = $cat->id();
 				} else {
 					$tagDAO = FreshRSS_Factory::createTagDao();
 					$tag = $tagDAO->searchByName($streamId);
-					if ($tag != null) {
+					if ($tag !== null) {
 						$type = 't';
 						$streamId = $tag->id();
 					} else {
@@ -1095,7 +1095,12 @@ final class GReaderAPI {
 										}
 									}
 								} elseif ($pathInfos[8] === 'label') {
-									$include_target = $pathInfos[9];
+									$include_target = empty($_SERVER['REQUEST_URI']) || !is_string($_SERVER['REQUEST_URI']) ? '' : $_SERVER['REQUEST_URI'];
+									if (preg_match('#/reader/api/0/stream/contents/user/[^/+]/label/([A-Za-z0-9\'!*()%$_.~+-]+)#', $include_target, $matches)) {
+										$include_target = urldecode($matches[1]);
+									} else {
+										$include_target = $pathInfos[9];
+									}
 									self::streamContents($pathInfos[8], $include_target, $start_time, $stop_time,
 										$count, $order, $filter_target, $exclude_target, $continuation);
 								}
