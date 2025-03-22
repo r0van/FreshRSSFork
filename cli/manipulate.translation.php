@@ -12,8 +12,8 @@ $cliOptions = new class extends CliOptionsParser {
 	public string $value;
 	public string $language;
 	public string $originLanguage;
-	public string $revert;
-	public string $help;
+	public bool $revert;
+	public bool $help;
 
 	public function __construct() {
 		$this->addRequiredOption('action', (new CliOption('action', 'a')));
@@ -30,7 +30,7 @@ $cliOptions = new class extends CliOptionsParser {
 if (!empty($cliOptions->errors)) {
 	fail('FreshRSS error: ' . array_shift($cliOptions->errors) . "\n" . $cliOptions->usage);
 }
-if (isset($cliOptions->help)) {
+if ($cliOptions->help) {
 	manipulateHelp();
 }
 
@@ -79,7 +79,7 @@ switch ($cliOptions->action) {
 		break;
 	case 'ignore':
 		if (isset($cliOptions->language) && isset($cliOptions->key)) {
-			$i18nData->ignore($cliOptions->key, $cliOptions->language, isset($cliOptions->revert));
+			$i18nData->ignore($cliOptions->key, $cliOptions->language, $cliOptions->revert);
 		} else {
 			error('You need to specify a valid set of options.');
 			exit;
@@ -87,7 +87,7 @@ switch ($cliOptions->action) {
 		break;
 	case 'ignore_unmodified':
 		if (isset($cliOptions->language)) {
-			$i18nData->ignore_unmodified($cliOptions->language, isset($cliOptions->revert));
+			$i18nData->ignore_unmodified($cliOptions->language, $cliOptions->revert);
 		} else {
 			error('You need to specify a valid set of options.');
 			exit;

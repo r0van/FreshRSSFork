@@ -11,9 +11,9 @@ require_once __DIR__ . '/../constants.php';
 $cliOptions = new class extends CliOptionsParser {
 	/** @var array<int,string> $language */
 	public array $language;
-	public string $displayResult;
-	public string $help;
-	public string $displayReport;
+	public bool $displayResult;
+	public bool $help;
+	public bool $displayReport;
 
 	public function __construct() {
 		$this->addOption('language', (new CliOption('language', 'l'))->typeOfArrayOfString());
@@ -27,7 +27,7 @@ $cliOptions = new class extends CliOptionsParser {
 if (!empty($cliOptions->errors)) {
 	fail('FreshRSS error: ' . array_shift($cliOptions->errors) . "\n" . $cliOptions->usage);
 }
-if (isset($cliOptions->help)) {
+if ($cliOptions->help) {
 	checkHelp();
 }
 
@@ -39,8 +39,6 @@ if (isset($cliOptions->language)) {
 } else {
 	$languages = $i18nData->getAvailableLanguages();
 }
-$displayResults = isset($cliOptions->displayResult);
-$displayReport = isset($cliOptions->displayReport);
 
 $isValidated = true;
 $result = [];
@@ -58,7 +56,7 @@ foreach ($languages as $language) {
 	$result[$language] = $i18nValidator->displayResult();
 }
 
-if ($displayResults) {
+if ($cliOptions->displayResult) {
 	foreach ($result as $lang => $value) {
 		echo 'Language: ', $lang, PHP_EOL;
 		print_r($value);
@@ -66,7 +64,7 @@ if ($displayResults) {
 	}
 }
 
-if ($displayReport) {
+if ($cliOptions->displayReport) {
 	foreach ($report as $value) {
 		echo $value;
 	}

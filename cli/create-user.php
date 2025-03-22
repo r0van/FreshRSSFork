@@ -82,7 +82,7 @@ $ok = FreshRSS_user_Controller::createUser(
 	$cliOptions->email ?? null,
 	$cliOptions->password ?? '',
 	$values,
-	!isset($cliOptions->noDefaultFeeds)
+	!$cliOptions->noDefaultFeeds
 );
 
 if (!$ok) {
