@@ -88,7 +88,7 @@ return array(
 				'_' => 'HTML + XPath + JSONドット記法 (HTML内のJSON)',
 				'xpath' => array(
 					'_' => 'HTML内のJSONを指すXPath',
-					'help' => '例: <code>//script[@type="application/json"]</code>',
+					'help' => '例: <code>normalize-space(//script[@type="application/json"])</code> (single JSON)<br />or: <code>//script[@type="application/ld+json"]</code> (one JSON object per article)',	// DIRTY
 				),
 			),
 			'html_xpath' => array(

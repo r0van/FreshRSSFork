@@ -88,7 +88,7 @@ return array(
 				'_' => 'HTML + XPath + JSON nokta gösterimi (HTML’de JSON)',
 				'xpath' => array(
 					'_' => 'HTML’de JSON için XPath',
-					'help' => 'Örnek: <code>//script[@type="application/json"]</code>',
+					'help' => 'Örnek: <code>normalize-space(//script[@type="application/json"])</code> (single JSON)<br />or: <code>//script[@type="application/ld+json"]</code> (one JSON object per article)',	// DIRTY
 				),
 			),
 			'html_xpath' => array(

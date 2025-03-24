@@ -88,7 +88,7 @@ return array(
 				'_' => 'HTML + XPath + JSON dot notation (JSON en HTML)',
 				'xpath' => array(
 					'_' => 'XPath para JSON en HTML',
-					'help' => 'Ejemplo: <code>//script[@type="application/json"]</code>',
+					'help' => 'Ejemplo: <code>normalize-space(//script[@type="application/json"])</code> (single JSON)<br />or: <code>//script[@type="application/ld+json"]</code> (one JSON object per article)',	// DIRTY
 				),
 			),
 			'html_xpath' => array(

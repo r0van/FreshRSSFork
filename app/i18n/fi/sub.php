@@ -88,7 +88,7 @@ return array(
 				'_' => 'HTML + XPath + JSON-pistemerkintä (JSON HTML:ssä)',
 				'xpath' => array(
 					'_' => 'XPath (JSON HTML:ssä)',
-					'help' => 'Esimerkki: <code>//script[@type="application/json"]</code>',
+					'help' => 'Esimerkki: <code>normalize-space(//script[@type="application/json"])</code> (single JSON)<br />or: <code>//script[@type="application/ld+json"]</code> (one JSON object per article)',	// DIRTY
 				),
 			),
 			'html_xpath' => array(

@@ -88,7 +88,7 @@ return array(
 				'_' => 'HTML + XPath + JSON pont jelölés (JSON a HTML-ben)',
 				'xpath' => array(
 					'_' => 'XPath JSON-hoz HTML-ben',
-					'help' => 'Példa: <code>//script[@type="application/json"]</code>',
+					'help' => 'Példa: <code>normalize-space(//script[@type="application/json"])</code> (single JSON)<br />or: <code>//script[@type="application/ld+json"]</code> (one JSON object per article)',	// DIRTY
 				),
 			),
 			'html_xpath' => array(
