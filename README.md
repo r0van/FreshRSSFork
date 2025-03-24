@@ -152,17 +152,18 @@ and [Fever API](https://freshrss.github.io/FreshRSS/en/developers/06_Fever_API.h
 # Included libraries
 
 * [SimplePie](https://simplepie.org/)
-* [MINZ](https://framagit.org/marienfressinaud/MINZ)
 * [php-http-304](https://alexandre.alapetite.fr/doc-alex/php-http-304/)
 * [lib_opml](https://framagit.org/marienfressinaud/lib_opml)
+* [bcrypt.js](https://github.com/dcodeIO/bcrypt.js)
 * [PhpGt/CssXPath](https://github.com/PhpGt/CssXPath)
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 * [Chart.js](https://www.chartjs.org)
 
-## Only for some options or configurations
+# Additional credits
 
-* [bcrypt.js](https://github.com/dcodeIO/bcrypt.js)
-* [phpQuery](https://github.com/phpquery/phpquery)
+* Based on a modified version of the [MINZ framework](https://framagit.org/marienfressinaud/MINZ).
+* Some [icons](https://gitlab.gnome.org/Archive/gnome-icon-theme-symbolic) come from the [GNOME project](https://www.gnome.org/)
+* Fonts: [*Open Sans*](https://fonts.google.com/specimen/Open+Sans), [*Lato*](https://www.latofonts.com/lato-free-fonts/), [*Spectral*](https://github.com/productiontype/spectral)
 
 # Alternatives
 

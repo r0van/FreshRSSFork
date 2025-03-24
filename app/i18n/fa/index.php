@@ -26,8 +26,6 @@ return array(
 			),
 		),
 		'bugs_reports' => ' گزارش اشکال',
-		'credits' => ' اعتبار',
-		'credits_content' => ' برخی از عناصر طراحی از <a href="http://twitter.github.io/bootstrap/">Bootstrap</a> می آیند',
 		'documentation' => ' اسناد و مدارک',
 		'freshrss_description' => ' FreshRSS یک جمع کننده و خواننده RSS خود میزبان است. این به شما امکان می دهد بدون نیاز به مرور از یک وب سایت به وب سایت دیگر',
 		'github' => ' <a href="https://github.com/FreshRSS/FreshRSS/issues">در GitHub</a>',

@@ -26,8 +26,6 @@ return array(
 			),
 		),
 		'bugs_reports' => '報告錯誤',
-		'credits' => '致謝',
-		'credits_content' => '某些設計元素來自於 <a href="http://twitter.github.io/bootstrap/">Bootstrap</a> ，盡管 FreshRSS 並沒有使用此框架。<a href="https://gitlab.gnome.org/Archive/gnome-icon-theme-symbolic">圖標</a> 來自於 <a href="https://www.gnome.org/">GNOME 項目</a>。<em>Open Sans</em> 字體出自 <a href="https://fonts.google.com/specimen/Open+Sans">Steve Matteson</a> 之手。FreshRSS 基於 PHP 框架 <a href="https://framagit.org/marienfressinaud/MINZ">Minz</a>。',
 		'documentation' => 'Documentation',	// TODO
 		'freshrss_description' => 'FreshRSS 是一個自托管的 RSS 聚合服務。 它不僅輕快又易用，而且強大又易於配置。',
 		'github' => '<a href="https://github.com/FreshRSS/FreshRSS/issues">GitHub Issues</a>',

@@ -26,8 +26,6 @@ return array(
 			),
 		),
 		'bugs_reports' => 'Virheraportit',
-		'credits' => 'Tekijät',
-		'credits_content' => 'Jotkin suunnitteluelementit perustuvat <a href="http://twitter.github.io/bootstrap/">Bootstrapiin</a>, mutta FreshRSS ei käytä tätä kehystä. <a href="https://gitlab.gnome.org/Archive/gnome-icon-theme-symbolic">Kuvakkeet</a> tulevat <a href="https://www.gnome.org/">GNOME-projektista</a>. <em>Open Sans</em> -fontin on luonut <a href="https://fonts.google.com/specimen/Open+Sans">Steve Matteson</a>. FreshRSS perustuu PHP-kehykseen <a href="https://framagit.org/marienfressinaud/MINZ">Minz</a>.',
 		'documentation' => 'Ohjeet',
 		'freshrss_description' => 'FreshRSS on itse asennettava RSS-syötteiden luku- ja hallintaohjelma. Sen avulla voit helposti lukea ja seurata useita uutissivustoja yhdessä näkymässä, eikä sinun tarvitse siirtyä sivustolta toiselle. FreshRSS on kevyt, muokattavissa ja helppokäyttöinen.',
 		'github' => '<a href="https://github.com/FreshRSS/FreshRSS/issues">GitHubissa</a>',
