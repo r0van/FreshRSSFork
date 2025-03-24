@@ -84,6 +84,7 @@ People are sorted by name so please keep this order.
 * [FromTheMoon85](https://github.com/FromTheMoon85): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:FromTheMoon85)
 * [Gaurav Thakur](https://github.com/notfoss): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:notfoss), [Web](https://blog.notfoss.com/)
 * [Gianni Scolaro](https://github.com/giannidsp): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:giannidsp)
+* [Glyn Normington](https://github.com/glyn): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:glyn), [Web](https://underlap.org/)
 * [Gregor Nathanael Meyer](https://github.com/spackmat): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:spackmat), [Web](https://der-meyer.de)
 * [gsongsong](https://github.com/gsongsong): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:gsongsong)
 * [Guilherme Gall](https://github.com/gmgall): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:gmgall), [Web](https://gmgall.net/)
