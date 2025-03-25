@@ -97,7 +97,7 @@ class FreshRSS_user_Controller extends FreshRSS_ActionController {
 
 		FreshRSS_View::prependTitle(_t('conf.profile.title') . ' · ');
 
-		FreshRSS_View::appendScript(Minz_Url::display('/scripts/bcrypt.min.js?' . @filemtime(PUBLIC_PATH . '/scripts/bcrypt.min.js')));
+		FreshRSS_View::appendScript(Minz_Url::display('/scripts/vendor/bcrypt.js?' . @filemtime(PUBLIC_PATH . '/scripts/vendor/bcrypt.js')));
 
 		if (Minz_Request::isPost() && Minz_User::name() != null) {
 			$old_email = FreshRSS_Context::userConf()->mail_login;

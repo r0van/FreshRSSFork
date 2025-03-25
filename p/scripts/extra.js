@@ -17,13 +17,13 @@ function forgetOpenCategories() {
 }
 
 function init_crypto_form() {
-	/* globals dcodeIO */
+	/* globals bcrypt */
 	const crypto_form = document.getElementById('crypto-form');
 	if (!crypto_form) {
 		return;
 	}
 
-	if (!(window.dcodeIO)) {
+	if (!(window.bcrypt)) {
 		if (window.console) {
 			console.log('FreshRSS waiting for bcrypt.js…');
 		}
@@ -67,8 +67,8 @@ function init_crypto_form() {
 				} else {
 					try {
 						const strong = window.Uint32Array && window.crypto && (typeof window.crypto.getRandomValues === 'function');
-						const s = dcodeIO.bcrypt.hashSync(document.getElementById('passwordPlain').value, json.salt1);
-						const c = dcodeIO.bcrypt.hashSync(json.nonce + s, strong ? dcodeIO.bcrypt.genSaltSync(4) : poormanSalt());
+						const s = bcrypt.hashSync(document.getElementById('passwordPlain').value, json.salt1);
+						const c = bcrypt.hashSync(json.nonce + s, strong ? bcrypt.genSaltSync(4) : poormanSalt());
 						document.getElementById('challenge').value = c;
 						if (!s || !c) {
 							openNotification('Crypto error!', 'bad');
