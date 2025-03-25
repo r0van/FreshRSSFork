@@ -53,6 +53,9 @@ var context;
 	context.icons.unread = decodeURIComponent(context.icons.unread);
 	context.extensions = json.extensions;
 }());
+
+const freshrssGlobalContextLoadedEvent = new Event('freshrss:globalContextLoaded');
+document.dispatchEvent(freshrssGlobalContextLoadedEvent);
 // </Global context>
 
 function badAjax(reload) {

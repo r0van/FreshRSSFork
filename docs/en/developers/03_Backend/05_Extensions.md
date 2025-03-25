@@ -183,6 +183,24 @@ The following events are available:
 
 > ℹ️ Note: the `simplepie_*` hooks are only fired for feeds using SimplePie via pull, i.e. normal RSS/Atom feeds. This excludes WebSub (push), and the various HTML or JSON Web scraping methods.
 
+### JavaScript events
+
+```javascript
+function use_context() {
+	// Something that refers to the window.context
+}
+
+if (document.readyState && document.readyState !== 'loading' && typeof window.context !== 'undefined' && typeof window.context.extensions !== 'undefined') {
+	use_context();
+} else {
+	document.addEventListener('freshrss:globalContextLoaded', use_context, false);
+}
+```
+
+The following events are available:
+
+* `freshrss:globalContextLoaded`: will be dispatched after load the global `context` variable, useful for referencing variables injected with the `js_vars` hook.
+
 ### Injecting CDN content
 
 When using the `init` method, it is possible to inject scripts from CDN using the `Minz_View::appendScript` directive.
