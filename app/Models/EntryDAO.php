@@ -748,8 +748,8 @@ SQL;
 			$sql .= ' ORDER BY id DESC LIMIT ' . $limit;
 		}
 		$stm = $this->pdo->query($sql);
-		if ($stm != false) {
-			while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
+		if ($stm !== false) {
+			while (is_array($row = $stm->fetch(PDO::FETCH_ASSOC))) {
 				/** @var array{id:string,guid:string,title:string,author:string,content:string,link:string,date:int,lastSeen:int,
 				 *	hash:string,is_read:bool,is_favorite:bool,id_feed:int,tags:string,attributes:?string} $row */
 				yield $row;
@@ -1394,12 +1394,10 @@ SQL;
 		$stm = $this->listWhereRaw($type, $id, $state, $filters, id_min: $id_min, id_max: $id_max, sort: $sort, order: $order,
 			continuation_id: $continuation_id, continuation_value: $continuation_value, limit: $limit, offset: $offset);
 		if ($stm !== false) {
-			while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
-				if (is_array($row)) {
-					/** @var array{'id':string,'id_feed':int,'guid':string,'title':string,'author':string,'content':string,'link':string,'date':int,
-					 *		'hash':string,'is_read':int,'is_favorite':int,'tags':string,'attributes'?:?string} $row */
-					yield FreshRSS_Entry::fromArray($row);
-				}
+			while (is_array($row = $stm->fetch(PDO::FETCH_ASSOC))) {
+				/** @var array{'id':string,'id_feed':int,'guid':string,'title':string,'author':string,'content':string,'link':string,'date':int,
+				 *		'hash':string,'is_read':int,'is_favorite':int,'tags':string,'attributes'?:?string} $row */
+				yield FreshRSS_Entry::fromArray($row);
 			}
 		}
 	}
@@ -1438,12 +1436,10 @@ SQL;
 		if ($stm === false || !$stm->execute($ids)) {
 			return;
 		}
-		while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
-			if (is_array($row)) {
-				/** @var array{'id':string,'id_feed':int,'guid':string,'title':string,'author':string,'content':string,'link':string,'date':int,
-				 *		'hash':string,'is_read':int,'is_favorite':int,'tags':string,'attributes':?string} $row */
-				yield FreshRSS_Entry::fromArray($row);
-			}
+		while (is_array($row = $stm->fetch(PDO::FETCH_ASSOC))) {
+			/** @var array{'id':string,'id_feed':int,'guid':string,'title':string,'author':string,'content':string,'link':string,'date':int,
+			 *		'hash':string,'is_read':int,'is_favorite':int,'tags':string,'attributes':?string} $row */
+			yield FreshRSS_Entry::fromArray($row);
 		}
 	}
 

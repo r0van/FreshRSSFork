@@ -125,7 +125,7 @@ SQL;
 			Minz_Log::error('SQL error ' . __METHOD__ . json_encode($this->pdo->errorInfo()));
 			return;
 		}
-		while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
+		while (is_array($row = $stm->fetch(PDO::FETCH_ASSOC))) {
 			/** @var array{id:int,name:string,attributes?:array<string,mixed>} $row */
 			yield $row;
 		}
@@ -139,7 +139,7 @@ SQL;
 			Minz_Log::error('SQL error ' . __METHOD__ . json_encode($this->pdo->errorInfo()));
 			return;
 		}
-		while ($row = $stm->fetch(PDO::FETCH_ASSOC)) {
+		while (is_array($row = $stm->fetch(PDO::FETCH_ASSOC))) {
 			/** @var array{id_tag:int,id_entry:int|numeric-string}> $row */
 			yield $row;	// @phpstan-ignore generator.valueType
 		}
