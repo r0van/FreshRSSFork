@@ -78,10 +78,8 @@ function is_valid_path_extension(string $path, string $extensionPath, bool $isSt
  * @return bool true if it can be served, false otherwise.
  */
 function is_valid_path(string $path): bool {
-	return !str_contains($path, '..') && !str_starts_with($path, '/') && !str_starts_with($path, '\\') && (
-		is_valid_path_extension($path, CORE_EXTENSIONS_PATH) ||
-		is_valid_path_extension($path, THIRDPARTY_EXTENSIONS_PATH) ||
-		is_valid_path_extension($path, USERS_PATH, false));
+	return is_valid_path_extension($path, CORE_EXTENSIONS_PATH) || is_valid_path_extension($path, THIRDPARTY_EXTENSIONS_PATH)
+		|| is_valid_path_extension($path, USERS_PATH, false);
 }
 
 function sendBadRequestResponse(?string $message = null): never {
@@ -103,6 +101,11 @@ $file_type = $_GET['t'];
 if (empty(SUPPORTED_TYPES[$file_type]) ||
 	empty(SUPPORTED_TYPES[pathinfo($file_name, PATHINFO_EXTENSION)])) {
 	sendBadRequestResponse('File type is not supported.');
+}
+
+// Forbid absolute paths and path traversal
+if (str_contains($file_name, '..') || str_starts_with($file_name, '/') || str_starts_with($file_name, '\\')) {
+	sendBadRequestResponse('File is not supported.');
 }
 
 $absolute_filename = get_absolute_filename($file_name);
