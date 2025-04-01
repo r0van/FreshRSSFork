@@ -76,14 +76,15 @@ function is_valid_path_extension(string $path, string $extensionPath, bool $isSt
  *
  * @param string $path the path to the file we want to serve.
  * @return bool true if it can be served, false otherwise.
- *
  */
 function is_valid_path(string $path): bool {
-	return is_valid_path_extension($path, CORE_EXTENSIONS_PATH) || is_valid_path_extension($path, THIRDPARTY_EXTENSIONS_PATH)
-		|| is_valid_path_extension($path, USERS_PATH, false);
+	return !str_contains($path, '..') && !str_starts_with($path, '/') && !str_starts_with($path, '\\') && (
+		is_valid_path_extension($path, CORE_EXTENSIONS_PATH) ||
+		is_valid_path_extension($path, THIRDPARTY_EXTENSIONS_PATH) ||
+		is_valid_path_extension($path, USERS_PATH, false));
 }
 
-function sendBadRequestResponse(string $message = null): never {
+function sendBadRequestResponse(?string $message = null): never {
 	header('HTTP/1.1 400 Bad Request');
 	die($message);
 }
