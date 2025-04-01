@@ -91,6 +91,10 @@ abstract class Minz_Extension {
 		$this->is_enabled = true;
 	}
 
+	final public function disable(): void {
+		$this->is_enabled = false;
+	}
+
 	/**
 	 * Return if the extension is currently enabled.
 	 *
@@ -253,6 +257,8 @@ abstract class Minz_Extension {
 		switch ($type) {
 			case 'system': return FreshRSS_Context::hasSystemConf();
 			case 'user': return FreshRSS_Context::hasUserConf();
+			default:
+				return false;
 		}
 	}
 

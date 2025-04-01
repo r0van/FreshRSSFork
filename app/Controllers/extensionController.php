@@ -131,7 +131,12 @@ class FreshRSS_extension_Controller extends FreshRSS_ActionController {
 
 		FreshRSS_View::prependTitle($ext->getName() . ' · ' . _t('admin.extensions.title') . ' · ');
 		$this->view->extension = $ext;
-		$this->view->extension->handleConfigureAction();
+		try {
+			$this->view->extension->handleConfigureAction();
+		} catch (Minz_Exception $e) {	// @phpstan-ignore catch.neverThrown (Thrown by extensions)
+			Minz_Log::error('Error while configuring extension ' . $ext->getName() . ': ' . $e->getMessage());
+			Minz_Request::bad(_t('feedback.extensions.enable.ko', $ext_name, _url('index', 'logs')), ['c' => 'extension', 'a' => 'index']);
+		}
 	}
 
 	/**

@@ -268,7 +268,13 @@ final class Minz_ExtensionManager {
 				spl_autoload_register([$ext, 'autoload']);
 			}
 			$ext->enable();
-			$ext->init();
+			try {
+				$ext->init();
+			} catch (Minz_Exception $e) {	// @phpstan-ignore catch.neverThrown (Thrown by extensions)
+				Minz_Log::warning('Error while enabling extension ' . $ext->getName() . ': ' . $e->getMessage());
+				$ext->disable();
+				unset(self::$ext_list_enabled[$ext_name]);
+			}
 		}
 	}
 
