@@ -204,4 +204,9 @@ class FreshRSS_tag_Controller extends FreshRSS_ActionController {
 		$tagDAO = FreshRSS_Factory::createTagDao();
 		$this->view->tags = $tagDAO->listTags(precounts: true);
 	}
+
+	public static function escapeForSearch(string $tag): string {
+		$tag = htmlspecialchars_decode($tag, ENT_QUOTES);
+		return str_replace([' ', '(', ')'], ['+', '\\(', '\\)'], $tag);
+	}
 }
