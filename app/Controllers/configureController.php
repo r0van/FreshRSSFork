@@ -505,7 +505,6 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 			$limits['cookie_duration'] = Minz_Request::paramInt('cookie-duration') ?: FreshRSS_Auth::DEFAULT_COOKIE_DURATION;
 			FreshRSS_Context::systemConf()->limits = $limits;
 			FreshRSS_Context::systemConf()->title = Minz_Request::paramString('instance-name') ?: 'FreshRSS';
-			FreshRSS_Context::systemConf()->auto_update_url = Minz_Request::paramString('auto-update-url');
 			FreshRSS_Context::systemConf()->force_email_validation = Minz_Request::paramBoolean('force-email-validation');
 			FreshRSS_Context::systemConf()->save();
 

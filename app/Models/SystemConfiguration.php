@@ -9,7 +9,7 @@ declare(strict_types=1);
  * @property bool $api_enabled
  * @property string $archiving
  * @property 'form'|'http_auth'|'none' $auth_type
- * @property string $auto_update_url
+ * @property-read string $auto_update_url
  * @property-read array<int,mixed> $curl_options
  * @property string $default_user
  * @property string $email_validation_token
