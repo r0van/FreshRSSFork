@@ -432,14 +432,14 @@ th {
 	color: #36c;
 	transition: all 0.15s ease-in-out;
 }
-#bigMarkAsRead:hover {
+#bigMarkAsRead.big:hover {
 	background: #36c;
 	color: #fff;
 }
-#bigMarkAsRead:hover .bigTick {
+#bigMarkAsRead.big:hover .bigTick {
 	filter: brightness(5);
 }
-#bigMarkAsRead .bigTick {
+#bigMarkAsRead.big .bigTick {
 	margin: 0.5rem 0;
 	background: url(icons/tick-color.svg) center no-repeat;
 	display: inline-block;
