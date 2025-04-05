@@ -395,6 +395,8 @@ button.as-link:hover,
 button.as-link:active {
 	background: transparent;
 	color: inherit;
+	font-family: inherit;
+	font-size: inherit;
 	border: none;
 	cursor: pointer;
 	text-align: right;
@@ -670,6 +672,7 @@ input[type="checkbox"]:focus-visible {
 
 .nav-list .item,
 .nav-list .item > a,
+.nav-list .item > .as-link,
 .nav-list .item > span {
 	display: block;
 	overflow: hidden;

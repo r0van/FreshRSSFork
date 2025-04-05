@@ -338,7 +338,8 @@ form {
 			cursor: default;
 		}
 
-		a:hover {
+		a:hover,
+		.as-link:hover {
 			background-color: var(--color-background-nav-darker);
 			color: var(--color-text-light);
 		}
@@ -352,7 +353,8 @@ form {
 			}
 		}
 
-		> a {
+		> a,
+		> .as-link {
 			padding: 0 1.5rem;
 		}
 

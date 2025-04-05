@@ -1117,7 +1117,8 @@ optgroup::before {
 	line-height: 2.5;
 }
 
-.nav-list .item > a {
+.nav-list .item > a,
+.nav-list .item > .as-link {
 	padding: 0 1rem;
 }
 

@@ -180,7 +180,8 @@ th {
 .nav-list .item.active a {
 }
 
-.nav-list .item > a {
+.nav-list .item > a,
+.nav-list .item > .as-link {
 	padding: 0 10px;
 }
 

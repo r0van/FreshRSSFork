@@ -317,7 +317,8 @@ th {
 	color: var(--font-color-white);
 }
 
-.nav-list .item > a {
+.nav-list .item > a,
+.nav-list .item > .as-link {
 	padding: 0 1rem;
 }
 

@@ -266,7 +266,8 @@ th {
 	color: #fff;
 }
 
-.nav-list .item > a {
+.nav-list .item > a,
+.nav-list .item > .as-link {
 	padding: 0 1rem;
 }
 

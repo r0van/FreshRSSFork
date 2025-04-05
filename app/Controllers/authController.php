@@ -223,9 +223,13 @@ class FreshRSS_auth_Controller extends FreshRSS_ActionController {
 	 * This action removes all accesses of the current user.
 	 */
 	public function logoutAction(): void {
-		invalidateHttpCache();
-		FreshRSS_Auth::removeAccess();
-		Minz_Request::good(_t('feedback.auth.logout.success'), [ 'c' => 'index', 'a' => 'index' ]);
+		if (Minz_Request::isPost()) {
+			invalidateHttpCache();
+			FreshRSS_Auth::removeAccess();
+			Minz_Request::good(_t('feedback.auth.logout.success'), [ 'c' => 'index', 'a' => 'index' ]);
+		} else {
+			Minz_Error::error(403);
+		}
 	}
 
 	/**
