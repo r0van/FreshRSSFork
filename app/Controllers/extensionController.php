@@ -298,4 +298,40 @@ class FreshRSS_extension_Controller extends FreshRSS_ActionController {
 
 		Minz_Request::forward($url_redirect, true);
 	}
+
+	// Supported types with their associated content type
+	public const MIME_TYPES = [
+		'css' => 'text/css; charset=UTF-8',
+		'gif' => 'image/gif',
+		'jpeg' => 'image/jpeg',
+		'jpg' => 'image/jpeg',
+		'js' => 'application/javascript; charset=UTF-8',
+		'png' => 'image/png',
+		'svg' => 'image/svg+xml',
+	];
+
+	public function serveAction(): void {
+		$extensionName = Minz_Request::paramString('x');
+		$filename = Minz_Request::paramString('f');
+		$mimeType = pathinfo($filename, PATHINFO_EXTENSION);
+		if ($extensionName === '' || $filename === '' || $mimeType === '' || empty(self::MIME_TYPES[$mimeType])) {
+			header('HTTP/1.1 400 Bad Request');
+			die('Bad Request!');
+		}
+		$extension = Minz_ExtensionManager::findExtension($extensionName);
+		if ($extension === null || !$extension->isEnabled() || ($mtime = $extension->mtimeFile($filename)) === null) {
+			header('HTTP/1.1 404 Not Found');
+			die('Not Found!');
+		}
+
+		$this->view->_layout(null);
+
+		$content_type = self::MIME_TYPES[$mimeType];
+		header("Content-Type: {$content_type}");
+		header("Content-Disposition: inline; filename='{$filename}'");
+		header('Referrer-Policy: same-origin');
+		if (!httpConditional($mtime, cacheSeconds: 604800, cachePrivacy: 2)) {
+			echo $extension->getFile($filename);
+		}
+	}
 }

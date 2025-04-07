@@ -116,7 +116,9 @@ The `Minz_Extension` abstract class defines a set of methods that can be overrid
 
 The `Minz_Extension` abstract class defines another set of methods that should not be overridden:
 * the `getName`, `getEntrypoint`, `getPath`, `getAuthor`, `getDescription`, `getVersion`, and `getType` methods return the extension internal properties. Those properties are extracted from the `metadata.json` file.
-* the `getFileUrl` returns the URL of the selected file. The file must exist in the `static` folder of the extension.
+* `getFileUrl(string $filename, bool $isStatic = true): string` will return the URL to a file in the `static` directory.
+	The first parameter is the name of the file (without `static/`).
+	Set `$isStatic` to true for user-independent files, and to `false` for files saved in a user’s own directory.
 * the `registerController` method register an extension controller in FreshRSS. The selected controller must be defined in the extension *Controllers* folder, its file name must be `\<name\>Controller.php`, and its class name must be `FreshExtension_\<name\>_Controller`.
 * the `registerViews` method registers the extension views in FreshRSS.
 * the `registerTranslates` method registers the extension translation files in FreshRSS.

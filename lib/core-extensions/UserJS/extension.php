@@ -11,7 +11,7 @@ final class UserJSExtension extends Minz_Extension {
 
 		$this->registerTranslates();
 		if ($this->hasFile(self::FILENAME)) {
-			Minz_View::appendScript($this->getFileUrl(self::FILENAME, 'js', false));
+			Minz_View::appendScript($this->getFileUrl(self::FILENAME, isStatic: false));
 		}
 	}
 

@@ -171,9 +171,9 @@ Your class will benefit from four methods to redefine:
 	`getName()`, `getEntrypoint()`, `getPath()` (allows you to retrieve the
 	path to your extension), `getAuthor()`, `getDescription()`,
 	`getVersion()`, `getType()`.
-* `getFileUrl($filename, $type)` will return the URL to a file in the
-	`static` directory. The first parameter is the name of the file (without
-	`static /`), the second is the type of file to be used (`css` or `js`).
+* `getFileUrl(string $filename, bool $isStatic = true): string` will return the URL to a file in the `static` directory.
+	The first parameter is the name of the file (without `static/`).
+	Set `$isStatic` to true for user-independent files, and to `false` for files saved in a user’s own directory.
 * `registerController($base_name)` will tell Minz to take into account the
 	given controller in the routing system. The controller must be located in
 	your `Controllers` directory, the name of the file must be `<base_name>Controller.php` and the name of the
