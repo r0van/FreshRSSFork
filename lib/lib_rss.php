@@ -567,7 +567,18 @@ function httpGet(string $url, string $cachePath, string $type = 'html', array $a
 
 	curl_setopt_array($ch, FreshRSS_Context::systemConf()->curl_options);
 
-	if (isset($attributes['curl_params']) && is_array($attributes['curl_params'])) {
+	if (is_array($attributes['curl_params'] ?? null)) {
+		$options = $attributes['curl_params'];
+		if (is_array($options[CURLOPT_HTTPHEADER] ?? null)) {
+			// Remove headers problematic for security
+			$options[CURLOPT_HTTPHEADER] = array_filter($options[CURLOPT_HTTPHEADER],
+				fn($header) => is_string($header) && !preg_match('/^(Remote-User|X-WebAuth-User)\\s*:/i', $header));
+			// Add Accept header if it is not set
+			if (preg_grep('/^Accept\\s*:/i', $options[CURLOPT_HTTPHEADER]) === false) {
+				$options[CURLOPT_HTTPHEADER][] = 'Accept: ' . $accept;
+			}
+			$attributes['curl_params'] = $options;
+		}
 		curl_setopt_array($ch, $attributes['curl_params']);
 	}
 
