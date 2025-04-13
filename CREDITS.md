@@ -102,6 +102,7 @@ People are sorted by name so please keep this order.
 * [ibiruai](https://github.com/ibiruai): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:ibiruai)
 * [id-konstantin-stepanov](https://github.com/id-konstantin-stepanov): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:id-konstantin-stepanov)
 * [Ilias Vrachnis](https://github.com/vrachnis): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:vrachnis)
+* [Inverle](https://github.com/Inverle): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:Inverle)
 * [Jackson Culbreth](https://github.com/culbrethj): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:culbrethj)
 * [jaden](https://github.com/jaden): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:jaden)
 * [Jake Mannens](https://github.com/jakem72360): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:jakem72360)
