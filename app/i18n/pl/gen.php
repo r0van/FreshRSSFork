@@ -14,31 +14,31 @@ return array(
 	'action' => array(
 		'actualize' => 'Aktualizuj kanały',
 		'add' => 'Dodaj',
-		'back_to_rss_feeds' => '← Wróć do subskrybowanych kanałów RSS',
+		'back_to_rss_feeds' => '← Wróć do subskrypcji',
 		'cancel' => 'Anuluj',
-		'close' => 'Close',	// TODO
-		'create' => 'Stwórz',
-		'delete_all_feeds' => 'Delete all feeds',	// TODO
-		'delete_errored_feeds' => 'Delete feeds with errors',	// TODO
+		'close' => 'Zamknij',
+		'create' => 'Utwórz',
+		'delete_all_feeds' => 'Usuń wszystkie kanały',
+		'delete_errored_feeds' => 'Usuń kanały z błędami',
 		'delete_muted_feeds' => 'Usuń wyciszone kanały',
 		'demote' => 'Zdegraduj',
 		'disable' => 'Wyłącz',
-		'download' => 'Download',	// TODO
+		'download' => 'Pobierz',
 		'empty' => 'Opróżnij',
 		'enable' => 'Włącz',
 		'export' => 'Eksportuj',
 		'filter' => 'Filtruj',
 		'import' => 'Importuj',
-		'load_default_shortcuts' => 'Ustaw domyślne skróty',
+		'load_default_shortcuts' => 'Przywróć domyślne skróty',
 		'manage' => 'Ustawienia',
 		'mark_read' => 'Oznacz jako przeczytane',
 		'menu' => array(
-			'open' => 'Open menu',	// TODO
+			'open' => 'Otwórz menu',
 		),
 		'nav_buttons' => array(
-			'next' => 'Next article',	// TODO
-			'prev' => 'Previous article',	// TODO
-			'up' => 'Go up',	// TODO
+			'next' => 'Następny artykuł',
+			'prev' => 'Poprzedni artykuł',
+			'up' => 'Idź do góry',
 		),
 		'open_url' => 'Otwórz adres',
 		'promote' => 'Awansuj',
@@ -55,35 +55,35 @@ return array(
 		'accept_tos' => 'Akceptuję <a href="%s">Warunki użytkowania</a>.',
 		'email' => 'Adres e-mail',
 		'keep_logged_in' => 'Nie pytaj ponownie o logowanie <small>(przez %s dni)</small>',
-		'login' => 'Logowanie',
+		'login' => 'Zaloguj się',
 		'logout' => 'Wyloguj',
 		'password' => array(
 			'_' => 'Hasło',
-			'format' => '<small>Przynajmniej 7 znaków</small>',
+			'format' => '<small>przynajmniej 7 znaków</small>',
 		),
 		'registration' => array(
-			'_' => 'Nowe konto',
-			'ask' => 'Stworzyć nowe konto?',
+			'_' => 'Tworzenie konta',
+			'ask' => 'Nie masz konta?',
 			'title' => 'Tworzenie konta',
 		),
 		'username' => array(
 			'_' => 'Nazwa użytkownika',
-			'format' => '<small>Nie więcej niż 16 znaków alfanumerycznych</small>',
+			'format' => '<small>nie więcej niż 16 znaków alfanumerycznych</small>',
 		),
 	),
 	'date' => array(
-		'Apr' => '\\K\\w\\i\\e\\t\\n\\i\\a',
-		'Aug' => '\\S\\i\\e\\r\\p\\n\\i\\a',
-		'Dec' => '\\G\\r\\u\\d\\n\\i\\a',
-		'Feb' => '\\L\\u\\t\\e\\g\\o',
-		'Jan' => '\\S\\t\\y\\c\\z\\n\\i\\a',
-		'Jul' => '\\L\\i\\p\\c\\a',
-		'Jun' => '\\C\\z\\e\\r\\w\\c\\a',
-		'Mar' => '\\M\\a\\r\\c\\a',
-		'May' => '\\M\\a\\j\\a',
-		'Nov' => '\\L\\i\\s\\t\\o\\p\\a\\d\\a',
-		'Oct' => '\\P\\a\\ź\\d\\z\\i\\e\\r\\n\\i\\k\\a',
-		'Sep' => '\\W\\r\\z\\e\\ś\\n\\i\\a',
+		'Apr' => '\\k\\w\\i\\e\\t\\n\\i\\a',
+		'Aug' => '\\s\\i\\e\\r\\p\\n\\i\\a',
+		'Dec' => '\\g\\r\\u\\d\\n\\i\\a',
+		'Feb' => '\\l\\u\\t\\e\\g\\o',
+		'Jan' => '\\s\\t\\y\\c\\z\\n\\i\\a',
+		'Jul' => '\\l\\i\\p\\c\\a',
+		'Jun' => '\\c\\z\\e\\r\\w\\c\\a',
+		'Mar' => '\\m\\a\\r\\c\\a',
+		'May' => '\\m\\a\\j\\a',
+		'Nov' => '\\l\\i\\s\\t\\o\\p\\a\\d\\a',
+		'Oct' => '\\p\\a\\ź\\d\\z\\i\\e\\r\\n\\i\\k\\a',
+		'Sep' => '\\w\\r\\z\\e\\ś\\n\\i\\a',
 		'apr' => 'Kwi',
 		'april' => 'Kwiecień',
 		'aug' => 'Sie',
@@ -133,14 +133,14 @@ return array(
 	'dir' => 'ltr',	// IGNORE
 	'freshrss' => array(
 		'_' => 'FreshRSS',	// IGNORE
-		'about' => 'O serwisie FreshRSS',
+		'about' => 'O oprogramowaniu FreshRSS',
 	),
 	'js' => array(
 		'category_empty' => 'Pusta kategoria',
 		'confirm_action' => 'Czy jesteś pewien, że chcesz przeprowadzić daną operację? Nie można cofnąć jej rezultatów!',
-		'confirm_action_feed_cat' => 'czy jesteś pewien, że chcesz przeprowadzić daną operację? Stracisz powiązane zapytania i ulubione wiadomości. Tych zmian nie można wycofać!',
+		'confirm_action_feed_cat' => 'Czy jesteś pewien, że chcesz przeprowadzić daną operację? Stracisz powiązane zapytania i ulubione wiadomości. Tych zmian nie można wycofać!',
 		'feedback' => array(
-			'body_new_articles' => 'Na FreshRSS znajduje się %%d wiadomości do przeczytania.',
+			'body_new_articles' => 'W FreshRSS znajduje się %%d wiadomości do przeczytania.',
 			'body_unread_articles' => '(Nieprzeczytane: %%d)',
 			'request_failed' => 'Zapytanie nie powiodło się. Może to być spowodowane problemami z łącznością z internetem.',
 			'title_new_articles' => 'FreshRSS: nowe wiadomości!',
@@ -188,15 +188,15 @@ return array(
 		'display' => 'Wyświetlanie',
 		'extensions' => 'Rozszerzenia',
 		'logs' => 'Dziennik',
-		'privacy' => 'Privacy',	// TODO
+		'privacy' => 'Prywatność',
 		'queries' => 'Zapisane zapytania',
 		'reading' => 'Czytanie',
 		'search' => 'Wyszukaj wyrazy lub #tagi',
 		'search_help' => 'Zaawansowane <a href="https://freshrss.github.io/FreshRSS/en/users/10_filter.html#with-the-search-field" target="_blank">parametry wyszukiwania</a> opisane są w dokumentacji',
-		'sharing' => 'Podawanie dalej',
+		'sharing' => 'Udostępnianie',
 		'shortcuts' => 'Skróty klawiszowe',
 		'stats' => 'Statystyki',
-		'system' => 'Konfiguracja serwisu',
+		'system' => 'Konfiguracja serwera',
 		'update' => 'Aktualizacja',
 		'user_management' => 'Zarządzanie użytkownikami',
 		'user_profile' => 'Profil',
@@ -213,7 +213,7 @@ return array(
 		'archiveIS' => 'archive.is',	// IGNORE
 		'archiveORG' => 'archive.org',	// IGNORE
 		'archivePH' => 'archive.ph',	// IGNORE
-		'bluesky' => 'Bluesky',	// TODO
+		'bluesky' => 'Bluesky',	// IGNORE
 		'buffer' => 'Buffer',	// IGNORE
 		'clipboard' => 'Schowek',
 		'diaspora' => 'Diaspora*',	// IGNORE
@@ -252,7 +252,7 @@ return array(
 		'default_category' => 'Brak kategorii',
 		'no' => 'Nie',
 		'not_applicable' => 'Niedostępne',
-		'ok' => 'Okay!',	// IGNORE
+		'ok' => 'Okej!',
 		'or' => 'lub',
 		'yes' => 'Tak',
 	),

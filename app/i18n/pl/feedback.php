@@ -91,9 +91,9 @@ return array(
 			'actualizeds' => 'Kanały RSS zostały zaktualizowane',
 			'added' => 'Kanał RSS <em>%s</em> został dodany',
 			'already_subscribed' => 'Kanał <em>%s</em> znajduje się już na liście subskrybowanych kanałów',
-			'cache_cleared' => 'Cache kanału <em>%s</em> zostało wyczyszczone',
+			'cache_cleared' => 'Pamięć podręczna kanału <em>%s</em> została wyczyszczona',
 			'deleted' => 'Kanał został usunięty',
-			'error' => 'Nie można zaktualizować kanału',
+			'error' => 'Nie udało się zaktualizować kanału',
 			'internal_problem' => 'Wystąpił błąd podczas dodawania kanału. <a href="%s">Sprawdź dziennik</a> w celu uzyskania szczegółowych informacji. Można spróbować wymusić dodanie kanału przez dodanie <code>#force_feed</code> na końcu adresu URL.',
 			'invalid_url' => 'Adres URL <em>%s</em> nie jest prawidłowy',
 			'n_actualized' => 'Liczba zaktualizowanych kanałów: %d',
@@ -124,15 +124,15 @@ return array(
 	'update' => array(
 		'can_apply' => 'FreshRSS zostanie zaktualizowany do <strong>wersji %s</strong>.',
 		'error' => 'Proces aktualizacji napotkał błąd: %s',
-		'file_is_nok' => 'Nowa <strong>wersja %s</strong> jest dostępna, ale należy sprawdzić uprawnienia katalogu <em>%s</em>. Serwer HTTP musi mieć możliwość zapisu',
+		'file_is_nok' => 'Nowa <strong>wersja %s</strong> jest dostępna, lecz należy sprawdzić uprawnienia katalogu <em>%s</em>. Użytkownik serwera WWW musi mieć uprawnienia do zapisu',
 		'finished' => 'Aktualizacja ukończona!',
 		'none' => 'Brak dostępnych aktualizacji',
 		'server_not_found' => 'Serwer aktualizacji nie może zostać odnaleziony. [%s]',
 	),
 	'user' => array(
 		'created' => array(
-			'_' => 'Stworzono konto użytkownika %s',
-			'error' => 'Konto użytkownika %s nie może zostać stworzone',
+			'_' => 'Utworzono konto użytkownika %s',
+			'error' => 'Konto użytkownika %s nie może zostać utworzone',
 		),
 		'deleted' => array(
 			'_' => 'Konto użytkownika %s zostało usunięte',

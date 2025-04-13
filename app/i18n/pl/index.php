@@ -16,18 +16,18 @@ return array(
 		'agpl3' => '<a href="https://www.gnu.org/licenses/agpl-3.0.html">AGPL 3</a>',	// IGNORE
 		'bug_reports' => array(
 			'environment_information' => array(
-				'_' => 'System information',	// TODO
-				'browser' => 'Browser',	// TODO
-				'database' => 'Database',	// TODO
-				'server_software' => 'Server software',	// TODO
-				'version_curl' => 'cURL version',	// TODO
-				'version_frss' => 'FreshRSS version',	// TODO
-				'version_php' => 'PHP version',	// TODO
+				'_' => 'Informacje o serwerze',
+				'browser' => 'Przeglądarka',
+				'database' => 'Baza danych',
+				'server_software' => 'Oprogramowanie serwera',
+				'version_curl' => 'Wersja biblioteki cURL',
+				'version_frss' => 'Wersja FreshRSS',
+				'version_php' => 'Wersja PHP',
 			),
 		),
-		'bugs_reports' => 'Zgłaszanie problemów',
+		'bugs_reports' => 'Zgłaszanie błędów',
 		'documentation' => 'Dokumentacja',
-		'freshrss_description' => 'FreshRSS jest agregatorem kanałów RSS przeznaczonym do zainstalowania na własnym serwerze. Jest lekki i łatwy do schowania w kieszeni, pozostając przy tym potężnym i konfigurowalnym narzędziem.',
+		'freshrss_description' => 'FreshRSS to agregator i czytnik RSS, który można hostować samodzielnie. Pozwala na szybkie śledzenie i czytanie wielu stron informacyjnych bez potrzeby przechodzenia z jednej strony na drugą. FreshRSS jest lekki, konfigurowalny i łatwy w użyciu.',
 		'github' => '<a href="https://github.com/FreshRSS/FreshRSS/issues">na GitHubie</a>',
 		'license' => 'Licencja',
 		'project_website' => 'Strona projektu',
@@ -37,9 +37,9 @@ return array(
 	'feed' => array(
 		'empty' => 'Brak wiadomości do wyświetlenia.',
 		'received' => array(
-			'before_yesterday' => 'Received before yesterday',	// TODO
-			'today' => 'Received today',	// TODO
-			'yesterday' => 'Received yesterday',	// TODO
+			'before_yesterday' => 'Otrzymane przedwczoraj',
+			'today' => 'Otrzymane dzisiaj',
+			'yesterday' => 'Otrzymane wczoraj',
 		),
 		'rss_of' => 'Kanał RSS: %s',
 		'title' => 'Kanał główny',
@@ -53,7 +53,7 @@ return array(
 		'title' => 'Dziennik',
 	),
 	'menu' => array(
-		'about' => 'O serwisie FreshRSS',
+		'about' => 'O oprogramowaniu FreshRSS',
 		'before_one_day' => 'Starsze niż dzień',
 		'before_one_week' => 'Starsze niż tydzień',
 		'bookmark_query' => 'Zapisz bieżące zapytanie',
@@ -70,29 +70,29 @@ return array(
 		'non-starred' => 'Pokaż wiadomości, które nie są ulubione',
 		'normal_view' => 'Widok normalny',
 		'older_first' => 'Najpierw najstarsze',
-		'queries' => 'Zapisane wyszukiwania',
+		'queries' => 'Zapisane zapytania',
 		'read' => 'Pokaż przeczytane',
 		'reader_view' => 'Widok czytania',
 		'rss_view' => 'Kanał RSS',
 		'search_short' => 'Szukaj',
 		'sort' => array(
-			'_' => 'Sorting criteria',	// TODO
-			'date_asc' => 'Publication date 1→9',	// TODO
-			'date_desc' => 'Publication date 9→1',	// TODO
-			'id_asc' => 'Freshly received last',	// TODO
-			'id_desc' => 'Freshly received first',	// TODO
-			'link_asc' => 'Link A→Z',	// TODO
-			'link_desc' => 'Link Z→A',	// TODO
-			'rand' => 'Random order',	// TODO
-			'title_asc' => 'Title A→Z',	// TODO
-			'title_desc' => 'Title Z→A',	// TODO
+			'_' => 'Kryteria sortowania',
+			'date_asc' => 'Data publikacji 1→9',
+			'date_desc' => 'Data publikacji 9→1',
+			'id_asc' => 'Najpożniej otrzymane',
+			'id_desc' => 'Najwcześniej otrzymane',
+			'link_asc' => 'Link A→Z',	// IGNORE
+			'link_desc' => 'Link Z→A',	// IGNORE
+			'rand' => 'Losowa kolejność',
+			'title_asc' => 'Tytuł A→Z',
+			'title_desc' => 'Tytuł Z→A',
 		),
 		'starred' => 'Pokaż ulubione',
 		'stats' => 'Statystyki',
 		'subscription' => 'Zarządzanie subskrypcjami',
 		'unread' => 'Pokaż nieprzeczytane',
 	),
-	'share' => 'Podaj dalej',
+	'share' => 'Udostępnij',
 	'tag' => array(
 		'related' => 'Tagi',
 	),
