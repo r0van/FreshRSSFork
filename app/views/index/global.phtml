@@ -1,47 +1,34 @@
 <?php
-	declare(strict_types=1);
-	/** @var FreshRSS_View $this */
-	$this->partial('nav_menu');
 
-	$class = '';
-	$state_unread = false;
+declare(strict_types=1);
+/** @var FreshRSS_View $this */
+$this->partial('nav_menu');
 
-	if (FreshRSS_Context::userConf()->hide_read_feeds &&
-			FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_NOT_READ) &&
-			!FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_READ)) {
-		$class = ' state_unread';
-		$state_unread = true;
-	}
+$class = '';
+$state_unread = false;
+
+if (FreshRSS_Context::userConf()->hide_read_feeds &&
+	FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_NOT_READ) &&
+	!FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_READ)) {
+	$class = ' state_unread';
+	$state_unread = true;
+}
 ?>
 
-<datalist id="datalist-labels"></datalist>
-
-<template id="share_article_template">
-	<?php $this->renderHelper('index/normal/entry_share_menu'); ?>
-	<a class="dropdown-close" href="#close">❌</a>
-</template>
-
-<template id="labels_article_template">
-	<div class="dropdown-menu">
-		<ul class="dropdown-menu-scrollable scrollbar-thin">
-			<li class="dropdown-header">
-				<?= _t('index.menu.mylabels') ?>
-				<?php if (FreshRSS_Auth::hasAccess()) { ?>
-					<a href="<?= _url('tag', 'index') ?>"><?= _i('configure') ?></a>
-				<?php } ?>
-			</li>
-			<!-- Ajax -->
-		</ul>
+<nav class="nav_menu">
+	<div class="group" id="category_filter_bar">
+		<a class="btn category-btn active" data-category="all">All</a>
+		<?php foreach ($this->categories as $cat): ?>
+			<a class="btn category-btn" data-category="cat-<?= $cat->id() ?>"><?= $cat->name() ?></a>
+		<?php endforeach; ?>
 	</div>
-	<a class="dropdown-close" href="#close">❌</a>
-</template>
+</nav>
 
 <main id="stream" class="global<?= $class ?>">
 	<h1 class="title_hidden"><?= _t('conf.reading.view.global') ?></h1>
-<?php
+	<?php
 	$params = array_filter($_GET, 'is_string', ARRAY_FILTER_USE_KEY);
-	unset($params['c']);
-	unset($params['a']);
+	unset($params['c'], $params['a']);
 	$url_base = [
 		'c' => 'index',
 		'a' => 'normal',
@@ -52,55 +39,45 @@
 
 	foreach ($this->categories as $cat) {
 		$feeds = $cat->feeds();
-		$url_base['params']['get'] = 'c_' . $cat->id();
-
 		if (!empty($feeds)) {
-			$unreadArticles += $cat->nbNotRead();
-?>
-	<div class="box category" data-unread="<?= $cat->nbNotRead() ?>">
-		<div class="box-title"><a class="title" data-unread="<?= format_number($cat->nbNotRead()) ?>"
-			href="<?= Minz_Url::display($url_base) ?>"><h2><?= $cat->name() ?></h2></a></div>
-
-		<ul class="box-content scrollbar-thin">
-			<?php
-				foreach ($feeds as $feed) {
-					$nb_not_read = $feed->nbNotRead();
-
-					$error_class = '';
-					$error_title = '';
-					if ($feed->inError() && !$feed->mute()) {
-						$error_class = ' error';
-						$error_title = _t('sub.feed.error');
-					}
-
-					$empty_class = '';
-					$empty_title = '';
-					if ($feed->nbEntries() == 0) {
-						$empty_class = ' empty';
-						$empty_title = _t('sub.feed.empty');
-					}
-					$mute_class = $feed->mute() ? ' mute' : '';
-
-					$url_base['params']['get'] = 'f_' . $feed->id();
-			?>
-			<li id="f_<?= $feed->id() ?>" class="item feed<?= $error_class, $empty_class, $mute_class ?>" title="<?= $error_title, $empty_title ?>"
-				data-unread="<?= $feed->nbNotRead() ?>" data-priority="<?= $feed->priority() ?>">
-				<?php if (FreshRSS_Context::userConf()->show_favicons): ?><img class="favicon" src="<?= $feed->favicon() ?>" alt="✇" loading="lazy" /><?php endif; ?>
-				<a class="item-title" data-unread="<?= format_number($feed->nbNotRead()) ?>" href="<?= Minz_Url::display($url_base) ?>"><?= $feed->name() ?></a>
-			</li>
-			<?php } ?>
-		</ul>
-	</div>
-<?php
+			foreach ($feeds as $feed) {
+				$entries = array_slice($feed->entries(), 0, 5);
+				$url_base['params']['get'] = 'f_' . $feed->id();
+				$unreadArticles += $feed->nbNotRead();
+	?>
+				<div class="box category cat-<?= $cat->id() ?>" data-unread="<?= $feed->nbNotRead() ?>">
+					<div class="box-title">
+						<h2>
+							<?php if (FreshRSS_Context::userConf()->show_favicons): ?>
+								<img class="favicon" src="<?= $feed->favicon() ?>" alt="✇" loading="lazy" style="vertical-align: middle; margin-right: 0.4em;" />
+							<?php endif; ?>
+							<a class="title" href="<?= Minz_Url::display($url_base) ?>">
+								<?= $feed->name() ?>
+							</a>
+						</h2>
+					</div>
+					<ul class="box-content scrollbar-thin">
+						<?php foreach ($entries as $entry): ?>
+							<li class="item entry">
+								<a class="entry_link noAjax"
+								   href="<?= htmlspecialchars($entry->link()) ?>"
+								   target="_blank"
+								   rel="noopener noreferrer">
+								   <?= htmlspecialchars($entry->title()) ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+	<?php
+			}
 		}
 	}
-
-	if ($unreadArticles < 1 && $state_unread) {
-		?>
-	<div id="noArticlesToShow" class="prompt alert alert-warn">
-		<h2 class="alert-head"><?= _t('index.feed.empty') ?></h2>
-	</div>
-	<?php } ?>
+	if ($unreadArticles < 1 && $state_unread): ?>
+		<div id="noArticlesToShow" class="prompt alert alert-warn">
+			<h2 class="alert-head"><?= _t('index.feed.empty') ?></h2>
+		</div>
+	<?php endif; ?>
 </main>
 
 <div id="overlay">

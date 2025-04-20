@@ -14,7 +14,7 @@ function load_panel(link) {
 	const req = new XMLHttpRequest();
 	req.open('GET', link + '&ajax=1', true);
 	req.responseType = 'document';
-	req.onload = function (e) {
+	req.onload = function () {
 		if (this.status != 200) {
 			return;
 		}
@@ -35,18 +35,12 @@ function load_panel(link) {
 		panel.classList.add('visible');
 		document.documentElement.classList.add('slider-active');
 
-		// Force the initial scroll to the top.
-		// Without it, if one scrolls down in a category (for instance)
-		// and then open another one, we risk being at the same scroll position
 		panel.scrollTop = 0;
 		document.documentElement.scrollTop = 0;
 
-		// We already have a click listener in main.js
 		panel.addEventListener('click', function (ev) {
 			const b = ev.target.closest('#nav_menu_read_all button, #bigMarkAsRead');
 			if (b) {
-				console.log(b.formAction);
-
 				const req2 = new XMLHttpRequest();
 				req2.open('POST', b.formAction, false);
 				req2.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
@@ -67,7 +61,7 @@ function load_panel(link) {
 
 function init_close_panel() {
 	const panel = document.getElementById('panel');
-	document.querySelector('#overlay .close').onclick = function (ev) {
+	document.querySelector('#overlay .close').onclick = function () {
 		panel.innerHTML = '';
 		panel.classList.remove('visible');
 		document.getElementById('overlay').classList.remove('visible');
@@ -84,8 +78,7 @@ function init_close_panel() {
 }
 
 function init_global_view() {
-	// TODO: should be based on generic classes
-	document.querySelectorAll('.box a').forEach(function (a) {
+	document.querySelectorAll('.box a:not(.entry_link)').forEach(function (a) {
 		a.onclick = function (ev) {
 			load_panel(a.href);
 			return false;
@@ -98,6 +91,24 @@ function init_global_view() {
 
 	const panel = document.getElementById('panel');
 	init_stream(panel);
+
+	// Kategorie filtrování
+	const buttons = document.querySelectorAll('.category-btn');
+	const boxes = document.querySelectorAll('.box.category');
+	if (buttons.length && boxes.length) {
+		buttons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const selected = btn.dataset.category;
+				boxes.forEach(box => {
+					if (selected === 'all') {
+						box.style.display = '';
+					} else {
+						box.style.display = box.classList.contains(selected) ? '' : 'none';
+					}
+				});
+			});
+		});
+	}
 }
 
 function init_all_global_view() {
@@ -105,7 +116,7 @@ function init_all_global_view() {
 		if (window.console) {
 			console.log('FreshRSS Global view waiting for JS…');
 		}
-		window.setTimeout(init_all_global_view, 50);	// Wait for all js to be loaded
+		window.setTimeout(init_all_global_view, 50);
 		return;
 	}
 	init_global_view();
@@ -119,4 +130,4 @@ if (document.readyState && document.readyState !== 'loading') {
 		init_all_global_view();
 	}, false);
 }
-// @license-end
+// @license-end:
