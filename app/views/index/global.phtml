@@ -1,7 +1,37 @@
 <?php
-
 declare(strict_types=1);
 /** @var FreshRSS_View $this */
+
+// AJAX: pouze obsah jednoho feedu (vrací box-content)
+if (isset($_GET['ajax'], $_GET['feed_id']) && $_GET['ajax'] === '1') {
+	foreach ($this->categories as $cat) {
+		foreach ($cat->feeds() as $feed) {
+			if ((string)$feed->id() === $_GET['feed_id']) {
+				$entries = array_slice($feed->entries(), 0, 6);
+				?>
+				<div class="box-content" style="max-height: none; overflow: visible;">
+					<ul>
+						<?php foreach ($entries as $entry): ?>
+							<li class="item entry">
+								<a class="entry_link noAjax"
+								   href="<?= htmlspecialchars($entry->link()) ?>"
+								   target="_blank"
+								   rel="noopener noreferrer">
+								   <?= htmlspecialchars($entry->title()) ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<?php
+				exit;
+			}
+		}
+	}
+	http_response_code(404);
+	exit;
+}
+
 $this->partial('nav_menu');
 
 $class = '';
@@ -26,53 +56,32 @@ if (FreshRSS_Context::userConf()->hide_read_feeds &&
 
 <main id="stream" class="global<?= $class ?>">
 	<h1 class="title_hidden"><?= _t('conf.reading.view.global') ?></h1>
-	<?php
-	$params = array_filter($_GET, 'is_string', ARRAY_FILTER_USE_KEY);
-	unset($params['c'], $params['a']);
-	$url_base = [
-		'c' => 'index',
-		'a' => 'normal',
-		'params' => $params,
-	];
 
+	<?php
 	$unreadArticles = 0;
 
-	foreach ($this->categories as $cat) {
-		$feeds = $cat->feeds();
-		if (!empty($feeds)) {
-			foreach ($feeds as $feed) {
-				$entries = array_slice($feed->entries(), 0, 5);
-				$url_base['params']['get'] = 'f_' . $feed->id();
-				$unreadArticles += $feed->nbNotRead();
+	foreach ($this->categories as $cat):
+		foreach ($cat->feeds() as $feed):
+			$url = '?a=normal&get=f_' . $feed->id();
+			$unreadArticles += $feed->nbNotRead();
 	?>
-				<div class="box category cat-<?= $cat->id() ?>" data-unread="<?= $feed->nbNotRead() ?>">
-					<div class="box-title">
-						<h2>
-							<?php if (FreshRSS_Context::userConf()->show_favicons): ?>
-								<img class="favicon" src="<?= $feed->favicon() ?>" alt="✇" loading="lazy" style="vertical-align: middle; margin-right: 0.4em;" />
-							<?php endif; ?>
-							<a class="title" href="<?= Minz_Url::display($url_base) ?>">
-								<?= $feed->name() ?>
-							</a>
-						</h2>
-					</div>
-					<ul class="box-content scrollbar-thin">
-						<?php foreach ($entries as $entry): ?>
-							<li class="item entry">
-								<a class="entry_link noAjax"
-								   href="<?= htmlspecialchars($entry->link()) ?>"
-								   target="_blank"
-								   rel="noopener noreferrer">
-								   <?= htmlspecialchars($entry->title()) ?>
-								</a>
-							</li>
-						<?php endforeach; ?>
-					</ul>
+			<div class="box category cat-<?= $cat->id() ?>" data-feed-id="<?= $feed->id() ?>" data-cat-id="<?= $cat->id() ?>">
+				<div class="box-title">
+					<h2>
+						<?php if (FreshRSS_Context::userConf()->show_favicons): ?>
+							<img class="favicon" src="<?= $feed->favicon() ?>" alt="✇" loading="lazy" style="vertical-align: middle; margin-right: 0.4em;" />
+						<?php endif; ?>
+						<a class="title" href="<?= $url ?>">
+							<?= $feed->name() ?>
+						</a>
+					</h2>
 				</div>
+				<div class="box-content loading">Loading…</div>
+			</div>
 	<?php
-			}
-		}
-	}
+		endforeach;
+	endforeach;
+
 	if ($unreadArticles < 1 && $state_unread): ?>
 		<div id="noArticlesToShow" class="prompt alert alert-warn">
 			<h2 class="alert-head"><?= _t('index.feed.empty') ?></h2>
