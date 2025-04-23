@@ -7,7 +7,11 @@ if (isset($_GET['ajax'], $_GET['feed_id']) && $_GET['ajax'] === '1') {
 	foreach ($this->categories as $cat) {
 		foreach ($cat->feeds() as $feed) {
 			if ((string)$feed->id() === $_GET['feed_id']) {
-				$entries = array_slice($feed->entries(), 0, 6);
+				$entries = $feed->entries();
+				usort($entries, function ($a, $b) {
+					return $b->date() <=> $a->date();  // Seřadit podle data (nejnovější první)
+				});
+				$entries = array_slice($entries, 0, 6);
 				?>
 				<div class="box-content" style="max-height: none; overflow: visible;">
 					<ul>
