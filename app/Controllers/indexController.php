@@ -147,13 +147,19 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 			<?php if (!empty($entries)): ?>
 				<ul>
 					<?php foreach ($entries as $entry): ?>
-					<li class="item entry<?= !$entry->isRead() ? ' not_read' : '' ?>" data-entry-id="<?= $entry->id() ?>">
-					<a class="entry_link noAjax"
-	   				href="<?= htmlspecialchars($entry->link()) ?>"
-	   				target="_blank"
-	   				rel="noopener noreferrer">
-	   				<?= htmlspecialchars($entry->title()) ?>
+					<li class="item entry<?= !$entry->isRead() ? ' not_read' : '' ?>"
+					    data-entry-id="<?= $entry->id() ?>"
+					    style="display: flex; justify-content: space-between; align-items: center; padding-right: 0.5em;">
+				  	<a class="entry_link noAjax"
+					   href="<?= htmlspecialchars($entry->link()) ?>"
+					   target="_blank"
+					   rel="noopener noreferrer"
+					   style="flex-grow: 1; text-decoration: none;">
+					 <?= htmlspecialchars($entry->title()) ?>
 					</a>
+					<span class="entry-date">
+						<?= date('d.m. H:i', $entry->date(true)) ?>
+					</span>
 					</li>
 					<?php endforeach; ?>
 				</ul>
