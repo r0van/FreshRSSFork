@@ -13,6 +13,8 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Fix API for labels with slash [#7437](https://github.com/FreshRSS/FreshRSS/pull/7437)
 * SimplePie
 	* Fix support for feeds with XML preamble + DTD [#7515](https://github.com/FreshRSS/FreshRSS/pull/7515), [simplepie#914](https://github.com/simplepie/simplepie/pull/914)
+	* Merged upstream [#7434](https://github.com/FreshRSS/FreshRSS/pull/7434)
+		* Upstream fix [simplepie#912](https://github.com/simplepie/simplepie/pull/912)
 * Security
 	* Disallow `<iframe srcdoc="">` [#7494](https://github.com/FreshRSS/FreshRSS/pull/7494)
 	* Disallow `<button formaction="">` [#7506](https://github.com/FreshRSS/FreshRSS/pull/7506)
@@ -39,9 +41,6 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Improve French [#7432](https://github.com/FreshRSS/FreshRSS/pull/7432)
 	* Improve Polish [#7508](https://github.com/FreshRSS/FreshRSS/pull/7508)
 	* Improve Turkish [#7442](https://github.com/FreshRSS/FreshRSS/pull/7442)
-* SimplePie
-	* Merged upstream [#7434](https://github.com/FreshRSS/FreshRSS/pull/7434)
-		* Upstream fix [simplepie#912](https://github.com/simplepie/simplepie/pull/912)
 * Misc.
 	* Improve PHP code [#7431](https://github.com/FreshRSS/FreshRSS/pull/7431), [#7488](https://github.com/FreshRSS/FreshRSS/pull/7488)
 	* Update dev dependencies [#7480](https://github.com/FreshRSS/FreshRSS/pull/7480), [#7482](https://github.com/FreshRSS/FreshRSS/pull/7482), [#7483](https://github.com/FreshRSS/FreshRSS/pull/7483),
