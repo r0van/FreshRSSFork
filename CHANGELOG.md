@@ -11,20 +11,24 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Fix escaping of tag search [#7468](https://github.com/FreshRSS/FreshRSS/pull/7468)
 	* Fix CLI parsing of Boolean flags [#7430](https://github.com/FreshRSS/FreshRSS/pull/7430)
 	* Fix API for labels with slash [#7437](https://github.com/FreshRSS/FreshRSS/pull/7437)
+* SimplePie
+	* Fix support for feeds with XML preamble + DTD [#7515](https://github.com/FreshRSS/FreshRSS/pull/7515), [simplepie#914](https://github.com/simplepie/simplepie/pull/914)
 * Security
+	* Disallow `<iframe srcdoc="">` [#7494](https://github.com/FreshRSS/FreshRSS/pull/7494)
+	* Disallow `<button formaction="">` [#7506](https://github.com/FreshRSS/FreshRSS/pull/7506)
+	* Improve favicons hash to avoid favicon pollution [#7505](https://github.com/FreshRSS/FreshRSS/pull/7505)
 	* Add `Content-Security-Policy` HTTP headers to favicons [#7471](https://github.com/FreshRSS/FreshRSS/pull/7471)
+	* Web scraping forbid security HTTP headers in cURL [#7496](https://github.com/FreshRSS/FreshRSS/pull/7496)
+	* Add some HTTP headers `Referrer-Policy: same-origin` [#6303](https://github.com/FreshRSS/FreshRSS/pull/6303), [#7478](https://github.com/FreshRSS/FreshRSS/pull/7478)
+	* Use HTTP POST for logout [#7489](https://github.com/FreshRSS/FreshRSS/pull/7489)
+	* Make update URL read-only [#7477](https://github.com/FreshRSS/FreshRSS/pull/7477)
 	* Fix for extensions: Restrict valid paths in `ext.php` [#7479](https://github.com/FreshRSS/FreshRSS/pull/7479)
 	* Fix for extensions: Secure serving of user files [#7495](https://github.com/FreshRSS/FreshRSS/pull/7495)
-	* Use HTTP POST for logout [#7489](https://github.com/FreshRSS/FreshRSS/pull/7489)
-	* Disallow `<iframe srcdoc="">` [#7494](https://github.com/FreshRSS/FreshRSS/pull/7494)
-	* Web scraping forbid security HTTP headers in cURL [#7496](https://github.com/FreshRSS/FreshRSS/pull/7496)
-	* Make update URL read-only [#7477](https://github.com/FreshRSS/FreshRSS/pull/7477)
-	* Add some HTTP headers `Referrer-Policy: same-origin` [#6303](https://github.com/FreshRSS/FreshRSS/pull/6303), [#7478](https://github.com/FreshRSS/FreshRSS/pull/7478)
-* Deployment
-	* Apache: add check for `mod_filter` to ensure that `AddOutputFilterByType` works [#7419](https://github.com/FreshRSS/FreshRSS/pull/7419)
 * Extensions
 	* Catch extension exceptions in override [#7475](https://github.com/FreshRSS/FreshRSS/pull/7475)
 	* JavaScript: new event to detect context loaded [#7452](https://github.com/FreshRSS/FreshRSS/pull/7452)
+* Deployment
+	* Apache: add check for `mod_filter` to ensure that `AddOutputFilterByType` works [#7419](https://github.com/FreshRSS/FreshRSS/pull/7419)
 * UI
 	* Accessibility: Add `:focus` style some dropdown menus [#7491](https://github.com/FreshRSS/FreshRSS/pull/7491)
 	* New size option for the *Mark as read* button [#7314](https://github.com/FreshRSS/FreshRSS/pull/7314)
@@ -33,6 +37,7 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 * I18n
 	* Rework credits [#7426](https://github.com/FreshRSS/FreshRSS/pull/7426)
 	* Improve French [#7432](https://github.com/FreshRSS/FreshRSS/pull/7432)
+	* Improve Polish [#7508](https://github.com/FreshRSS/FreshRSS/pull/7508)
 	* Improve Turkish [#7442](https://github.com/FreshRSS/FreshRSS/pull/7442)
 * SimplePie
 	* Merged upstream [#7434](https://github.com/FreshRSS/FreshRSS/pull/7434)
