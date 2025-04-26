@@ -140,7 +140,7 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		id_max: FreshRSS_Context::$id_max,
 		sort: FreshRSS_Context::$sort, // Zachovej řazení
 		order: FreshRSS_Context::$order, // Zachovej směr řazení
-		limit: 6
+		limit: 12
 		));
 		?>
 		<div class="box-content" style="max-height: none; overflow: visible;">
