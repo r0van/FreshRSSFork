@@ -373,18 +373,21 @@ a:hover .icon {
 	line-height: 2.5;
 }
 
-.nav-list .nav-section .item:hover a {
+.nav-list .nav-section .item:hover a,
+.nav-list .nav-section .item:hover .as-link {
 	background-color: var(--background-color-hover);
 	color: var(--font-color-link-hover);
 }
 
 .nav-list .nav-section .item.active:hover a,
+.nav-list .nav-section .item.active:hover .as-link,
 .nav-list .item.active {
 	background-color: var(--contrast-background-color-active);
 	color: var(--font-color-light);
 }
 
-.nav-list .item.active a {
+.nav-list .item.active a,
+.nav-list .item.active .as-link {
 	color: var(--font-color-light);
 }
 

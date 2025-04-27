@@ -614,7 +614,8 @@ th {
 	background: #ca7227;
 	color: #fff;
 }
-.nav-list .item.active a {
+.nav-list .item.active a,
+.nav-list .item.active .as-link {
 	background: #ca7227;
 	color: #fff;
 	text-decoration: none;

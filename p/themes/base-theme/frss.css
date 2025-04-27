@@ -400,6 +400,7 @@ button.as-link:active {
 	border: none;
 	cursor: pointer;
 	text-align: left;
+	line-height: inherit;
 }
 
 button.as-link[disabled] {
@@ -678,6 +679,7 @@ input[type="checkbox"]:focus-visible {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	width: 100%;
 }
 
 .nav-list .item.nav-section > ul {
