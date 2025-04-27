@@ -35,7 +35,7 @@ See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 	* Accessibility: Add `:focus` style some dropdown menus [#7491](https://github.com/FreshRSS/FreshRSS/pull/7491)
 	* New size option for the *Mark as read* button [#7314](https://github.com/FreshRSS/FreshRSS/pull/7314)
 	* Update `bcrypt.js` from 2.4.4 to 3.0.2 [#7449](https://github.com/FreshRSS/FreshRSS/pull/7449)
-	* Various UI and style improvements: [#7168](https://github.com/FreshRSS/FreshRSS/pull/7168)
+	* Various UI and style improvements: [#7168](https://github.com/FreshRSS/FreshRSS/pull/7168), [#7526](https://github.com/FreshRSS/FreshRSS/pull/7526)
 * I18n
 	* Rework credits [#7426](https://github.com/FreshRSS/FreshRSS/pull/7426)
 	* Improve French [#7432](https://github.com/FreshRSS/FreshRSS/pull/7432)

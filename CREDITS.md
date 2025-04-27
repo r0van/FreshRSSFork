@@ -140,6 +140,7 @@ People are sorted by name so please keep this order.
 * [Luc Sanchez](https://github.com/ColonelMoutarde): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:ColonelMoutarde), [Web](https://www.luc-sanchez.fr/)
 * [LucasVerneyDGE](https://github.com/LucasVerneyDGE): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:LucasVerneyDGE)
 * [Lukas David Vacula](https://github.com/ldv8434): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:ldv8434), [Web](https://lvacula.com/)
+* [Machou](https://github.com/Machou): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:Machou)
 * [Manu](https://github.com/m3nu): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:m3nu)
 * [Marc Ole Bulling](https://github.com/Forceu): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:Forceu)
 * [Marco Hinniger](https://github.com/rom-1): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:rom-1), [Web](https://blog.rootdir.net/)
