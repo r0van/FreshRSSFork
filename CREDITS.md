@@ -63,6 +63,7 @@ People are sorted by name so please keep this order.
 * [David Lynch](https://github.com/kemayo): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:kemayo), [Web](http://davidlynch.org/)
 * [David Souza](https://github.com/araujo0205): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:araujo0205), [Web](http://davidsouza.tech/)
 * [Dennis Cheng](https://github.com/den13501): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:den13501)
+* [Dezponia](https://github.com/dezponia): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:dezponia)
 * [Django Janny](https://github.com/keltroth): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:keltroth)
 * [drosoCode](https://github.com/drosoCode): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:drosoCode), [Web](https://thomasz.me/)
 * [dswd](https://github.com/dswd): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:dswd)
