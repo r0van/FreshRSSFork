@@ -813,6 +813,12 @@ function checkTrustedIP(): bool {
 }
 
 function httpAuthUser(bool $onlyTrusted = true): string {
+	$auths = array_intersect_key($_SERVER, ['REMOTE_USER' => '', 'REDIRECT_REMOTE_USER' => '', 'HTTP_REMOTE_USER' => '', 'HTTP_X_WEBAUTH_USER' => '']);
+	if (count($auths) > 1) {
+		Minz_Log::warning('Multiple HTTP authentication headers!');
+		return '';
+	}
+
 	if (!empty($_SERVER['REMOTE_USER']) && is_string($_SERVER['REMOTE_USER'])) {
 		return $_SERVER['REMOTE_USER'];
 	}
