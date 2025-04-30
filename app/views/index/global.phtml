@@ -44,6 +44,7 @@ if (FreshRSS_Context::userConf()->hide_read_feeds &&
 						<a class="title" href="<?= $url ?>">
 							<?= $feed->name() ?>
 						</a>
+						<button class="refresh-feed-btn" title="Refresh feed" data-feed-id="<?= $feed->id() ?>">↻</button>
 					</h2>
 				</div>
 				<div class="box-content loading">Loading…</div>

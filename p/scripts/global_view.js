@@ -61,6 +61,52 @@
 			});
 	}
 
+	function hardRefreshFeed(feedId, box) {
+		const url = `?c=feed&a=actualize&id=${feedId}`;
+
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			body: '_csrf=' + encodeURIComponent(context.csrf)
+		})
+		.then(res => {
+			if (!res.ok) throw new Error('Failed to update feed');
+			return res.text();
+		})
+		.then(() => {
+			loadBoxContent(box);
+		})
+		.catch(() => {
+			const content = box.querySelector('.box-content');
+			if (content) content.textContent = 'Refresh failed.';
+		});
+	}
+
+	function initRefreshButtons() {
+		document.querySelectorAll('.refresh-feed-btn').forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+
+				const feedId = btn.dataset.feedId;
+				const box = document.querySelector(`.box[data-feed-id="${feedId}"]`);
+				if (box) {
+					const content = box.querySelector('.box-content');
+					if (content) content.textContent = 'Refreshing…';
+
+					// spin animation
+					btn.classList.add('spin');
+					setTimeout(() => btn.classList.remove('spin'), 400);
+
+					hardRefreshFeed(feedId, box);
+				}
+			});
+		});
+	}
+
 	function loadAllBoxContents() {
 		document.querySelectorAll(SELECTORS.box).forEach(loadBoxContent);
 	}
@@ -203,6 +249,7 @@
 		initCategoryFilter();
 		loadAllBoxContents();
 		initEntryClickHandlers();
+		initRefreshButtons();
 	}
 
 	function initAll() {
