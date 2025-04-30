@@ -2,21 +2,23 @@
     declare(strict_types=1);
     /** @var FreshRSS_View $this */
 ?>
-<div class="login-container">
-    <!-- Left Panel -->
+<main class="login-container">
+
+    <!-- Levý panel -->
     <div class="login-left">
-    <h1>Welcome to Inufeed</h1>
-    <p class="inufeed-highlight">
-	Your free RSS reader <br>
-	Fast and awesome
-    </p>
-    <p class="inufeed-powered">
-        Proudly powered by
-        <a href="https://freshrss.org" target="_blank" class="inufeed-link">FreshRSS</a>.
-    </p>
+        <div class="inufeed-welcome">
+            <h1>Welcome to Inufeed</h1>
+            <p class="inufeed-highlight">
+                Your free RSS — fast and awesome
+            </p>
+            <p class="inufeed-powered">
+                Proudly powered by
+                <a href="https://freshrss.org" target="_blank" class="inufeed-link">FreshRSS</a>.
+            </p>
+        </div>
     </div>
 
-    <!-- Right Panel with login -->
+    <!-- Pravý panel s loginem -->
     <div class="login-right">
         <div class="login-box">
             <h2><?= _t('gen.auth.login') ?></h2>
@@ -48,10 +50,15 @@
                     </label>
                 </div>
 
-                <div class="form-group form-group-actions">
+                <div class="form-group form-group-actions button-row">
                     <button id="loginButton" type="submit" class="btn btn-important" disabled="disabled">
                         <?= _t('gen.auth.login') ?>
                     </button>
+                    <?php if (!max_registrations_reached()) { ?>
+                        <a href="<?= _url('auth', 'register') ?>" class="btn btn-secondary">
+                            <?= _t('gen.auth.registration.ask') ?>
+                        </a>
+                    <?php } ?>
                 </div>
             </form>
 
@@ -63,4 +70,4 @@
             </div>
         </div>
     </div>
-</div>
+</main>
