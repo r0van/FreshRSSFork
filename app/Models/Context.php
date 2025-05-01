@@ -56,12 +56,10 @@ final class FreshRSS_Context {
 
 	/**
 	 * @deprecated Will be made `private`; use `FreshRSS_Context::systemConf()` instead.
-	 * @internal
 	 */
 	public static ?FreshRSS_SystemConfiguration $system_conf = null;
 	/**
 	 * @deprecated Will be made `private`; use `FreshRSS_Context::userConf()` instead.
-	 * @internal
 	 */
 	public static ?FreshRSS_UserConfiguration $user_conf = null;
 
