@@ -100,10 +100,10 @@ return array(
 		),
 	),
 	'mark_read_button' => array(
-		'_' => '“segna tutto come letto” button',	// DIRTY
-		'big' => 'Big',	// TODO
-		'none' => 'None',	// TODO
-		'small' => 'Small',	// TODO
+		'_' => 'pulsante “segna tutto come letto”',
+		'big' => 'Grande',
+		'none' => 'Nessuno',
+		'small' => 'Piccolo',
 	),
 	'privacy' => array(
 		'_' => 'Privacy',	// IGNORE
