@@ -922,6 +922,14 @@ function recursive_unlink(string $dir): bool {
 		return true;
 	}
 
+	if (is_link($dir)) {
+		if (PHP_OS_FAMILY === "Windows") {
+			return rmdir($dir);
+		}
+
+		return unlink($dir);
+	}
+
 	$files = array_diff(scandir($dir) ?: [], ['.', '..']);
 	foreach ($files as $filename) {
 		$filename = $dir . '/' . $filename;
