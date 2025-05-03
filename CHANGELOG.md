@@ -2,7 +2,7 @@
 
 See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 
-## 2025-05-0X FreshRSS 1.26.2-dev
+## 2025-05-03 FreshRSS 1.26.2
 
 * Features
 	* Implement JSON string concatenation with & operator [#7414](https://github.com/FreshRSS/FreshRSS/pull/7414)
