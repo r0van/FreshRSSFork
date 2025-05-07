@@ -39,6 +39,11 @@ AddDefaultCharset	UTF-8
 <IfModule mod_headers.c>
 	<FilesMatch "\.(css|gif|html|ico|js|png|svg|woff|woff2)$">
 		Header	merge Cache-Control "public"
+		# If you run an old Apache 2.2-, comment out the following <If> section
+		<If "%{QUERY_STRING} =~ /^[0-9]+$/">
+			# For requests like `frss.css?1746304092`
+			Header merge Cache-Control "immutable"
+		</If>
 	</FilesMatch>
 	Header edit Set-Cookie ^(.*)$ "$1; SameSite=Lax"
 </IfModule>
