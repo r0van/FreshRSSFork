@@ -35,6 +35,10 @@ const CORE_EXTENSIONS_PATH = LIB_PATH . '/core-extensions';
 const TESTS_PATH = FRESHRSS_PATH . '/tests';
 //</Not customisable>
 
+if (version_compare(PHP_VERSION, FRESHRSS_MIN_PHP_VERSION, '<')) {
+	die(sprintf('Error: FreshRSS requires PHP %s+ but was invoked with PHP %s!', FRESHRSS_MIN_PHP_VERSION, PHP_VERSION));
+}
+
 if (file_exists(__DIR__ . '/constants.local.php')) {
 	//Include custom / local settings:
 	include(__DIR__ . '/constants.local.php');
