@@ -353,7 +353,7 @@ final class GReaderAPI {
 					//'firstitemmsec' => 0,
 					'url' => htmlspecialchars_decode($feed->url(), ENT_QUOTES),
 					'htmlUrl' => htmlspecialchars_decode($feed->website(), ENT_QUOTES),
-					'iconUrl' => $faviconsUrl . hash('crc32b', $salt . $feed->url()),
+					'iconUrl' => $faviconsUrl . $feed->hashFavicon(),
 				];
 			}
 		}
