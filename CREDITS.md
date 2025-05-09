@@ -44,6 +44,7 @@ People are sorted by name so please keep this order.
 * [Brooke.](https://github.com/BrookeDot): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:BrookeDot), [Web](https://brooke.codes/)
 * [Bryan Butler](https://github.com/BryanButlerGit): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:BryanButlerGit)
 * [caminsha](https://github.com/caminsha): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:caminsha)
+* [CarelessCaution](https://github.com/CarelessCaution): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:CarelessCaution)
 * [Cem KOÇ](https://github.com/hckweb): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:hckweb)
 * [chemical1979](https://github.com/chemical1979): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:chemical1979)
 * [Chris Francy](https://github.com/zoredache): [contributions](https://github.com/FreshRSS/FreshRSS/pulls?q=is:pr+author:zoredache)
