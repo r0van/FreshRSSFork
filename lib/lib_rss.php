@@ -647,11 +647,9 @@ function lazyimg(string $content): string {
 
 /** @return numeric-string */
 function uTimeString(): string {
-	$t = @gettimeofday();
-	$sec = is_numeric($t['sec']) ? (int)$t['sec'] : 0;
-	$usec = is_numeric($t['usec']) ? (int)$t['usec'] : 0;
-	$result = ((string)$sec) . str_pad((string)$usec, 6, '0', STR_PAD_LEFT);
-	return ctype_digit($result) ? $result : '0';
+	$t = gettimeofday();
+	// @phpstan-ignore return.type
+	return ((string)$t['sec']) . str_pad((string)$t['usec'], 6, '0', STR_PAD_LEFT);
 }
 
 function invalidateHttpCache(string $username = ''): bool {
