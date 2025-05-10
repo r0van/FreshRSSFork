@@ -2,7 +2,23 @@
 
 See also [the FreshRSS releases](https://github.com/FreshRSS/FreshRSS/releases).
 
-## 2025-XX-XX FreshRSS 1.26.3-dev
+## 2025-0X-XX FreshRSS 1.26.3-dev
+
+* Bug fixing
+	* Fix regression for favicon in GReader and Fever APIs [#7573](https://github.com/FreshRSS/FreshRSS/pull/7573)
+	* Fix newest articles (within last second) not shown [#7577](https://github.com/FreshRSS/FreshRSS/pull/7577)
+	* Fix duplicate HTTP header for POST [#7556](https://github.com/FreshRSS/FreshRSS/pull/7556)
+	* Move PHP minimum version check [#7560](https://github.com/FreshRSS/FreshRSS/pull/7560)
+* Security
+	* Fix encoding of themes [#7565](https://github.com/FreshRSS/FreshRSS/pull/7565)
+* UI
+	* Implement loading spinner for marking as favourite/read [#7564](https://github.com/FreshRSS/FreshRSS/pull/7564)
+	* Provide theme class for CSS [#7559](https://github.com/FreshRSS/FreshRSS/pull/7559)
+* Deployment
+	* Use HTTP `Cache-Control: immutable` for some files [#7552](https://github.com/FreshRSS/FreshRSS/pull/7552)
+	* Drop Apache 2.2 (only support Apache 2.4+) [#7561](https://github.com/FreshRSS/FreshRSS/pull/7561)
+* Misc.
+	* Update to PHPMailer 6.10.0 [#7542](https://github.com/FreshRSS/FreshRSS/pull/7542)
 
 
 ## 2025-05-03 FreshRSS 1.26.2
