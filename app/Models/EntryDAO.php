@@ -1318,7 +1318,9 @@ SQL;
 
 		return [array_merge($values, $searchValues), 'SELECT '
 			. ($type === 'T' ? 'DISTINCT ' : '')
-			. 'e.id FROM `_entry` e '
+			. 'e.id'
+			. ($type === 'T' && $orderBy !== 'e.id' ? ', ' . $orderBy : '') // SELECT DISTINCT, ORDER BY expressions must appear in SELECT
+			. ' FROM `_entry` e '
 			. 'INNER JOIN `_feed` f ON e.id_feed = f.id '
 			. ($type === 't' || $type === 'T' ? 'INNER JOIN `_entrytag` et ON et.id_entry = e.id ' : '')
 			. 'WHERE ' . $where
