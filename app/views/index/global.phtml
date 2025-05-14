@@ -1,110 +1,77 @@
 <?php
-	declare(strict_types=1);
-	/** @var FreshRSS_View $this */
-	$this->partial('nav_menu');
+declare(strict_types=1);
+/** @var FreshRSS_View $this */
 
-	$class = '';
-	$state_unread = false;
+$this->partial('nav_menu');
 
-	if (FreshRSS_Context::userConf()->hide_read_feeds &&
-			FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_NOT_READ) &&
-			!FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_READ)) {
-		$class = ' state_unread';
-		$state_unread = true;
-	}
+$class = '';
+$state_unread = false;
+
+if (FreshRSS_Context::userConf()->hide_read_feeds &&
+	FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_NOT_READ) &&
+	!FreshRSS_Context::isStateEnabled(FreshRSS_Entry::STATE_READ)) {
+	$class = ' state_unread';
+	$state_unread = true;
+}
 ?>
 
-<datalist id="datalist-labels"></datalist>
-
-<template id="share_article_template">
-	<?php $this->renderHelper('index/normal/entry_share_menu'); ?>
-	<a class="dropdown-close" href="#close">❌</a>
-</template>
-
-<template id="labels_article_template">
-	<div class="dropdown-menu">
-		<ul class="dropdown-menu-scrollable scrollbar-thin">
-			<li class="dropdown-header">
-				<?= _t('index.menu.mylabels') ?>
-				<?php if (FreshRSS_Auth::hasAccess()) { ?>
-					<a href="<?= _url('tag', 'index') ?>"><?= _i('configure') ?></a>
-				<?php } ?>
-			</li>
-			<!-- Ajax -->
-		</ul>
+<nav class="nav_menu">
+	<div class="group" id="category_filter_bar">
+		<a class="btn category-btn active" data-category="all">All</a>
+		<?php foreach ($this->categories as $cat): ?>
+			<a class="btn category-btn" data-category="cat-<?= $cat->id() ?>"><?= $cat->name() ?></a>
+		<?php endforeach; ?>
 	</div>
-	<a class="dropdown-close" href="#close">❌</a>
-</template>
+</nav>
 
 <main id="stream" class="global<?= $class ?>">
 	<h1 class="title_hidden"><?= _t('conf.reading.view.global') ?></h1>
-<?php
-	$params = array_filter($_GET, 'is_string', ARRAY_FILTER_USE_KEY);
-	unset($params['c']);
-	unset($params['a']);
-	$url_base = [
-		'c' => 'index',
-		'a' => 'normal',
-		'params' => $params,
-	];
 
+	<?php
 	$unreadArticles = 0;
 
-	foreach ($this->categories as $cat) {
-		$feeds = $cat->feeds();
-		$url_base['params']['get'] = 'c_' . $cat->id();
+	foreach ($this->categories as $cat):
+		foreach ($cat->feeds() as $feed):
+			$url = '?a=normal&get=f_' . $feed->id();
+			$unreadArticles += $feed->nbNotRead();
+	?>
+			<div class="box category cat-<?= $cat->id() ?>" data-feed-id="<?= $feed->id() ?>" data-cat-id="<?= $cat->id() ?>">
+				<div class="box-title">
+					<div class="box-header">
+						<h2 class="box-title-text">
+							<?php if (FreshRSS_Context::userConf()->show_favicons): ?>
+								<img class="favicon" src="<?= $feed->favicon() ?>" alt="" loading="lazy" style="vertical-align: middle; margin-right: 0.4em;" />
+							<?php endif; ?>
+							<a class="title" href="<?= $url ?>">
+								<?= $feed->name() ?>
+							</a>
+						</h2>
+						<button class="refresh-feed-btn" title="Refresh feed" data-feed-id="<?= $feed->id() ?>">
+							<svg class="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+								<path d="M12 6V9L16 5L12 1V4C7.58 4 4 7.58 4 12C4 13.85 4.63 15.55 5.69 16.91L7.1 15.5C6.42 14.52 6 13.31 6 12C6 8.69 8.69 6 12 6ZM18.31 7.09L16.9 8.5C17.58 9.48 18 10.69 18 12C18 15.31 15.31 18 12 18V15L8 19L12 23V20C16.42 20 20 16.42 20 12C20 10.15 19.37 8.45 18.31 7.09Z"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="box-content loading">Loading…</div>
+			</div>
+	<?php
+		endforeach;
+	endforeach;
 
-		if (!empty($feeds)) {
-			$unreadArticles += $cat->nbNotRead();
-?>
-	<div class="box category" data-unread="<?= $cat->nbNotRead() ?>">
-		<div class="box-title"><a class="title" data-unread="<?= format_number($cat->nbNotRead()) ?>"
-			href="<?= Minz_Url::display($url_base) ?>"><h2><?= $cat->name() ?></h2></a></div>
-
-		<ul class="box-content scrollbar-thin">
-			<?php
-				foreach ($feeds as $feed) {
-					$nb_not_read = $feed->nbNotRead();
-
-					$error_class = '';
-					$error_title = '';
-					if ($feed->inError() && !$feed->mute()) {
-						$error_class = ' error';
-						$error_title = _t('sub.feed.error');
-					}
-
-					$empty_class = '';
-					$empty_title = '';
-					if ($feed->nbEntries() == 0) {
-						$empty_class = ' empty';
-						$empty_title = _t('sub.feed.empty');
-					}
-					$mute_class = $feed->mute() ? ' mute' : '';
-
-					$url_base['params']['get'] = 'f_' . $feed->id();
-			?>
-			<li id="f_<?= $feed->id() ?>" class="item feed<?= $error_class, $empty_class, $mute_class ?>" title="<?= $error_title, $empty_title ?>"
-				data-unread="<?= $feed->nbNotRead() ?>" data-priority="<?= $feed->priority() ?>">
-				<?php if (FreshRSS_Context::userConf()->show_favicons): ?><img class="favicon" src="<?= $feed->favicon() ?>" alt="✇" loading="lazy" /><?php endif; ?>
-				<a class="item-title" data-unread="<?= format_number($feed->nbNotRead()) ?>" href="<?= Minz_Url::display($url_base) ?>"><?= $feed->name() ?></a>
-			</li>
-			<?php } ?>
-		</ul>
-	</div>
-<?php
-		}
-	}
-
-	if ($unreadArticles < 1 && $state_unread) {
-		?>
-	<div id="noArticlesToShow" class="prompt alert alert-warn">
-		<h2 class="alert-head"><?= _t('index.feed.empty') ?></h2>
-	</div>
-	<?php } ?>
+	if ($unreadArticles < 1 && $state_unread): ?>
+		<div id="noArticlesToShow" class="prompt alert alert-warn">
+			<h2 class="alert-head"><?= _t('index.feed.empty') ?></h2>
+		</div>
+	<?php endif; ?>
 </main>
 
 <div id="overlay">
 	<a class="close" href="#"><?= _i('close') ?></a>
-	<div id="panel"<?= FreshRSS_Context::userConf()->display_posts ? '' : ' class="hide_posts"' ?>>
+	<div id="panel"<?= FreshRSS_Context::userConf()->display_posts ? '' : ' class="hide_posts"' ?>></div>
 </div>
-</div>
+<script>
+	window.context = window.context || {};
+	window.context.csrf = '<?= FreshRSS_Auth::csrfToken() ?>';
+</script>
+

@@ -110,37 +110,93 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 	 * This action displays the global view of FreshRSS.
 	 */
 	public function globalAction(): void {
-		$allow_anonymous = FreshRSS_Context::systemConf()->allow_anonymous;
-		if (!FreshRSS_Auth::hasAccess() && !$allow_anonymous) {
-			Minz_Request::forward(['c' => 'auth', 'a' => 'login']);
-			return;
-		}
-
-		FreshRSS_View::appendScript(Minz_Url::display('/scripts/extra.js?' . @filemtime(PUBLIC_PATH . '/scripts/extra.js')));
-		FreshRSS_View::appendScript(Minz_Url::display('/scripts/global_view.js?' . @filemtime(PUBLIC_PATH . '/scripts/global_view.js')));
-
-		try {
-			FreshRSS_Context::updateUsingRequest(true);
-		} catch (FreshRSS_Context_Exception) {
-			Minz_Error::error(404);
-		}
-
-		$this->view->categories = FreshRSS_Context::categories();
-
-		$this->view->rss_title = FreshRSS_Context::$name . ' | ' . FreshRSS_View::title();
-		$title = _t('index.feed.title_global');
-		if (FreshRSS_Context::$get_unread > 0) {
-			$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
-		}
-		FreshRSS_View::prependTitle($title . ' · ');
-
-		$this->_csp([
-			'default-src' => "'self'",
-			'frame-src' => '*',
-			'img-src' => '* data:',
-			'media-src' => '*',
-		]);
+	if (!FreshRSS_Auth::hasAccess()) {
+		Minz_Request::forward(['c' => 'auth', 'a' => 'login']);
+		return;
 	}
+
+	// Handle AJAX request for a specific feed box
+	if (Minz_Request::param('ajax') === '1' && Minz_Request::param('feed_id') !== null) {
+		$this->view->_layout(null);
+	try {
+		FreshRSS_Context::updateUsingRequest(true);
+	} catch (FreshRSS_Context_Exception) {
+		Minz_Error::error(404);
+	}
+
+
+		$feedId = (int)Minz_Request::param('feed_id');
+		$entryDAO = FreshRSS_Factory::createEntryDao();
+
+		$id_min = FreshRSS_Context::$sinceHours > 0
+			? (string)((time() - FreshRSS_Context::$sinceHours * 3600) * 1_000_000)
+			: '0';
+
+		$entries = iterator_to_array($entryDAO->listWhere(
+		'f', $feedId,
+		FreshRSS_Entry::STATE_ALL, // Ignoruj filtr přečtených
+		FreshRSS_Context::$search, // Zachovej hledání
+		id_min: $id_min,
+		id_max: FreshRSS_Context::$id_max,
+		sort: FreshRSS_Context::$sort, // Zachovej řazení
+		order: FreshRSS_Context::$order, // Zachovej směr řazení
+		limit: 12
+		));
+		?>
+		<div class="box-content" style="max-height: none; overflow: visible;">
+			<?php if (!empty($entries)): ?>
+				<ul>
+					<?php foreach ($entries as $entry): ?>
+					<li class="item entry<?= !$entry->isRead() ? ' not_read' : '' ?>"
+					    data-entry-id="<?= $entry->id() ?>"
+					    style="display: flex; justify-content: space-between; align-items: center; padding-right: 0.5em;">
+				  	<a class="entry_link noAjax"
+					   href="<?= htmlspecialchars($entry->link()) ?>"
+					   target="_blank"
+					   rel="noopener noreferrer"
+					   style="flex-grow: 1; text-decoration: none;">
+					 <?= htmlspecialchars($entry->title()) ?>
+					</a>
+					<span class="entry-date">
+						<?= date('d.m. H:i', $entry->date(true)) ?>
+					</span>
+					</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php else: ?>
+				<p style="padding: 1em; color: #888;">No articles to display.</p>
+			<?php endif; ?>
+		</div>
+		<?php
+		exit;
+	}
+
+	// Load layout as usual
+	FreshRSS_View::appendScript(Minz_Url::display('/scripts/global_view.js?' . @filemtime(PUBLIC_PATH . '/scripts/global_view.js')));
+
+	try {
+		FreshRSS_Context::updateUsingRequest(true);
+	} catch (FreshRSS_Context_Exception) {
+		Minz_Error::error(404);
+	}
+
+	$this->view->categories = FreshRSS_Context::categories();
+
+	$this->view->rss_title = FreshRSS_Context::$name . ' | ' . FreshRSS_View::title();
+	$title = _t('index.feed.title_global');
+	if (FreshRSS_Context::$get_unread > 0) {
+		$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
+	}
+	FreshRSS_View::prependTitle($title . ' · ');
+
+	$this->_csp([
+		'default-src' => "'self'",
+		'frame-src' => '*',
+		'img-src' => '* data:',
+		'media-src' => '*',
+	]);
+}
+
 
 	/**
 	 * This action displays the RSS feed of FreshRSS.

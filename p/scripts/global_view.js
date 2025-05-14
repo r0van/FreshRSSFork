@@ -1,122 +1,276 @@
-// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-3.0
 'use strict';
-/* globals context, init_load_more, init_posts, init_stream */
 
-let panel_loading = false;
+(function () {
+	const SELECTORS = {
+		box: '.box[data-feed-id]',
+		boxContent: '.box-content',
+		categoryButton: '.category-btn',
+		categoryBox: '.box.category',
+		panel: '#panel',
+		overlay: '#overlay',
+		closeBtn: '#overlay .close',
+		entryLink: '.entry_link'
+	};
 
-function load_panel(link) {
-	if (panel_loading) {
-		return;
+	let panelLoading = false;
+
+	function buildBoxUrl(feedId) {
+		const params = new URLSearchParams({
+			a: 'global',
+			ajax: '1',
+			feed_id: feedId
+		});
+
+		const ctx = window.context || {};
+
+		if (ctx.sort) params.set('sort', ctx.sort);
+		if (ctx.order) params.set('order', ctx.order);
+		if (ctx.search) params.set('search', ctx.search);
+		if (ctx.get) params.set('get', ctx.get);
+
+		return '?' + params.toString();
 	}
 
-	panel_loading = true;
+	function loadBoxContent(box) {
+		const feedId = box.dataset.feedId;
+		const url = buildBoxUrl(feedId);
 
-	const req = new XMLHttpRequest();
-	req.open('GET', link + '&ajax=1', true);
-	req.responseType = 'document';
-	req.onload = function (e) {
-		if (this.status != 200) {
-			return;
-		}
-		const html = this.response;
-		const foreign = html.querySelectorAll('.nav_menu, #stream .day, #stream .flux, #stream-footer, #stream.prompt');
-		const panel = document.getElementById('panel');
-		foreign.forEach(function (el) {
-			panel.appendChild(document.adoptNode(el));
-		});
-		panel.querySelectorAll('.nav_menu > :not([id="nav_menu_read_all"])').forEach(function (el) {
-			el.remove();
-		});
+		fetch(url)
+			.then(res => {
+				if (!res.ok) throw new Error('HTTP error');
+				return res.text();
+			})
+			.then(html => {
+				const wrapper = document.createElement('div');
+				wrapper.innerHTML = html;
+				const newContent = wrapper.querySelector(SELECTORS.boxContent);
+				const currentContent = box.querySelector(SELECTORS.boxContent);
 
-		init_load_more(panel);
-		init_posts();
-
-		document.getElementById('overlay').classList.add('visible');
-		panel.classList.add('visible');
-		document.documentElement.classList.add('slider-active');
-
-		// Force the initial scroll to the top.
-		// Without it, if one scrolls down in a category (for instance)
-		// and then open another one, we risk being at the same scroll position
-		panel.scrollTop = 0;
-		document.documentElement.scrollTop = 0;
-
-		// We already have a click listener in main.js
-		panel.addEventListener('click', function (ev) {
-			const b = ev.target.closest('#nav_menu_read_all button, #bigMarkAsRead');
-			if (b) {
-				console.log(b.formAction);
-
-				const req2 = new XMLHttpRequest();
-				req2.open('POST', b.formAction, false);
-				req2.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-				req2.send(JSON.stringify({
-					_csrf: context.csrf,
-				}));
-				if (req2.status == 200) {
-					location.reload(false);
-					return false;
+				if (newContent && currentContent) {
+					newContent.style.maxHeight = 'none';
+					newContent.style.overflow = 'visible';
+					currentContent.replaceWith(newContent);
+					initEntryClickHandlers(newContent);
 				}
+			})
+			.catch(() => {
+				const content = box.querySelector(SELECTORS.boxContent);
+				if (content) {
+					content.textContent = 'Error while loading.';
+				}
+			});
+	}
+
+	function hardRefreshFeed(feedId, box) {
+		const url = `?c=feed&a=actualize&id=${feedId}`;
+
+		fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-Requested-With': 'XMLHttpRequest'
+			},
+			body: '_csrf=' + encodeURIComponent(context.csrf)
+		})
+		.then(res => {
+			if (!res.ok) throw new Error('Failed to update feed');
+			return res.text();
+		})
+		.then(() => {
+			loadBoxContent(box);
+		})
+		.catch(() => {
+			const content = box.querySelector('.box-content');
+			if (content) content.textContent = 'Refresh failed.';
+		});
+	}
+
+	function initRefreshButtons() {
+		document.querySelectorAll('.refresh-feed-btn').forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				e.stopPropagation();
+				e.preventDefault();
+
+				const feedId = btn.dataset.feedId;
+				const box = document.querySelector(`.box[data-feed-id="${feedId}"]`);
+				if (box) {
+					const content = box.querySelector('.box-content');
+					if (content) content.textContent = 'Refreshing…';
+
+					// spin animation
+					btn.classList.add('spin');
+					setTimeout(() => btn.classList.remove('spin'), 400);
+
+					hardRefreshFeed(feedId, box);
+				}
+			});
+		});
+	}
+
+	function loadAllBoxContents() {
+		document.querySelectorAll(SELECTORS.box).forEach(loadBoxContent);
+	}
+
+	function initCategoryFilter() {
+		const buttons = document.querySelectorAll(SELECTORS.categoryButton);
+		if (!buttons.length) return;
+
+		buttons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const selected = btn.dataset.category;
+				localStorage.setItem('freshrssSelectedCategory', selected);
+
+				buttons.forEach(b => b.classList.remove('active'));
+				btn.classList.add('active');
+
+				document.querySelectorAll(SELECTORS.categoryBox).forEach(box => {
+					box.style.display = selected === 'all' || box.classList.contains(selected) ? '' : 'none';
+				});
+			});
+		});
+
+		const saved = localStorage.getItem('freshrssSelectedCategory');
+		if (saved) {
+			const savedBtn = document.querySelector(`.category-btn[data-category="${saved}"]`);
+			if (savedBtn) {
+				savedBtn.click();
+			}
+		}
+	}
+
+	function initOverlayClose() {
+		const overlay = document.querySelector(SELECTORS.overlay);
+		const panel = document.querySelector(SELECTORS.panel);
+		const closeBtn = document.querySelector(SELECTORS.closeBtn);
+
+		closeBtn.addEventListener('click', () => {
+			panel.innerHTML = '';
+			panel.classList.remove('visible');
+			overlay.classList.remove('visible');
+			document.documentElement.classList.remove('slider-active');
+			return false;
+		});
+
+		document.addEventListener('keydown', e => {
+			if ((e.key || e.code).toUpperCase() === 'ESCAPE') {
+				closeBtn.click();
 			}
 		});
-
-		panel_loading = false;
-	};
-	req.send();
-}
-
-function init_close_panel() {
-	const panel = document.getElementById('panel');
-	document.querySelector('#overlay .close').onclick = function (ev) {
-		panel.innerHTML = '';
-		panel.classList.remove('visible');
-		document.getElementById('overlay').classList.remove('visible');
-		document.documentElement.classList.remove('slider-active');
-		return false;
-	};
-	document.addEventListener('keydown', ev => {
-		const k = (ev.key.trim() || ev.code).toUpperCase();
-		if (k === 'ESCAPE' || k === 'ESC') {
-			document.querySelector('#overlay .close').click();
-		}
-		return false;
-	});
-}
-
-function init_global_view() {
-	// TODO: should be based on generic classes
-	document.querySelectorAll('.box a').forEach(function (a) {
-		a.onclick = function (ev) {
-			load_panel(a.href);
-			return false;
-		};
-	});
-
-	document.querySelectorAll('.nav_menu #nav_menu_read_all, .nav_menu .toggle_aside').forEach(function (el) {
-		el.remove();
-	});
-
-	const panel = document.getElementById('panel');
-	init_stream(panel);
-}
-
-function init_all_global_view() {
-	if (!window.context) {
-		if (window.console) {
-			console.log('FreshRSS Global view waiting for JS…');
-		}
-		window.setTimeout(init_all_global_view, 50);	// Wait for all js to be loaded
-		return;
 	}
-	init_global_view();
-	init_close_panel();
-}
 
-if (document.readyState && document.readyState !== 'loading') {
-	init_all_global_view();
-} else {
-	document.addEventListener('DOMContentLoaded', function () {
-		init_all_global_view();
-	}, false);
-}
-// @license-end
+	function loadPanel(link) {
+		if (panelLoading) return;
+		panelLoading = true;
+
+		const req = new XMLHttpRequest();
+		req.open('GET', link + '&ajax=1', true);
+		req.responseType = 'document';
+		req.onload = function () {
+			if (this.status !== 200) return;
+
+			const html = this.response;
+			const panel = document.querySelector(SELECTORS.panel);
+			const overlay = document.querySelector(SELECTORS.overlay);
+			const foreign = html.querySelectorAll('.nav_menu, #stream .day, #stream .flux, #stream-footer, #stream.prompt');
+
+			foreign.forEach(el => panel.appendChild(document.adoptNode(el)));
+			panel.querySelectorAll('.nav_menu > :not([id="nav_menu_read_all"])').forEach(el => el.remove());
+
+			init_posts();
+			init_load_more(panel);
+
+			overlay.classList.add('visible');
+			panel.classList.add('visible');
+			document.documentElement.classList.add('slider-active');
+
+			panel.scrollTop = 0;
+			document.documentElement.scrollTop = 0;
+
+			panel.addEventListener('click', ev => {
+				const btn = ev.target.closest('#nav_menu_read_all button, #bigMarkAsRead');
+				if (btn) {
+					const req2 = new XMLHttpRequest();
+					req2.open('POST', btn.formAction, false);
+					req2.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+					req2.send(JSON.stringify({ _csrf: context.csrf }));
+					if (req2.status === 200) {
+						location.reload(false);
+						return false;
+					}
+				}
+			});
+
+			panelLoading = false;
+		};
+		req.send();
+	}
+
+	function mark_entry_as_read(entryId) {
+		if (!entryId || !context || !context.csrf) return;
+
+		const formData = new FormData();
+		formData.append('id', entryId);
+		formData.append('ajax', '1');
+		formData.append('_csrf', context.csrf);
+
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', '?c=entry&a=read', true);
+		xhr.send(formData);
+	}
+
+	function markEntryAsRead(entryId) {
+		mark_entry_as_read(entryId);
+	}
+
+	function initEntryClickHandlers(scope = document) {
+		scope.querySelectorAll(SELECTORS.entryLink).forEach(link => {
+			link.addEventListener('click', () => {
+				const li = link.closest('li[data-entry-id]');
+				if (li) {
+					const entryId = li.dataset.entryId;
+					markEntryAsRead(entryId);
+					li.classList.remove('not_read');
+				}
+			});
+		});
+	}
+
+	function initBoxLinks() {
+		document.querySelectorAll('.box a:not(.entry_link)').forEach(a => {
+			a.addEventListener('click', e => {
+				e.preventDefault();
+				loadPanel(a.href);
+			});
+		});
+	}
+
+	function initGlobalView() {
+		initBoxLinks();
+		initCategoryFilter();
+		loadAllBoxContents();
+		initEntryClickHandlers();
+		initRefreshButtons();
+	}
+
+	function initAll() {
+		if (!window.context) {
+			console.log('FreshRSS global view waiting for context…');
+			setTimeout(initAll, 50);
+			return;
+		}
+		initGlobalView();
+		initOverlayClose();
+	}
+
+	if (document.readyState && document.readyState !== 'loading') {
+		initAll();
+	} else {
+		document.addEventListener('DOMContentLoaded', initAll);
+	}
+
+	document.addEventListener('pjax:end', () => {
+		if (document.body.classList.contains('global')) {
+			initGlobalView();
+		}
+	});
+})();
