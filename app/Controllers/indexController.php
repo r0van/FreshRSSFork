@@ -16,9 +16,17 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 	 */
 	public function indexAction(): void {
 		$preferred_output = FreshRSS_Context::userConf()->view_mode;
+		$viewMode = FreshRSS_ViewMode::getAllModes()[$preferred_output] ?? null;
+
+		// Fallback to 'normal' if the preferred mode was not found
+		if ($viewMode === null) {
+			Minz_Request::setBadNotification(_t('feedback.extensions.invalid_view_mode', $preferred_output));
+			$viewMode = FreshRSS_ViewMode::getAllModes()['normal'];
+		}
+
 		Minz_Request::forward([
-			'c' => 'index',
-			'a' => $preferred_output,
+			'c' => $viewMode->controller(),
+			'a' => $viewMode->action(),
 		]);
 	}
 
@@ -49,7 +57,8 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		$this->_csp([
 			'default-src' => "'self'",
 			'frame-src' => '*',
-			'img-src' => '* data:',
+			'img-src' => '* data: blob:',
+			'frame-ancestors' => "'none'",
 			'media-src' => '*',
 		]);
 
@@ -110,9 +119,37 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 	 * This action displays the global view of FreshRSS.
 	 */
 	public function globalAction(): void {
-	if (!FreshRSS_Auth::hasAccess()) {
-		Minz_Request::forward(['c' => 'auth', 'a' => 'login']);
-		return;
+		$allow_anonymous = FreshRSS_Context::systemConf()->allow_anonymous;
+		if (!FreshRSS_Auth::hasAccess() && !$allow_anonymous) {
+			Minz_Request::forward(['c' => 'auth', 'a' => 'login']);
+			return;
+		}
+
+		FreshRSS_View::appendScript(Minz_Url::display('/scripts/extra.js?' . @filemtime(PUBLIC_PATH . '/scripts/extra.js')));
+		FreshRSS_View::appendScript(Minz_Url::display('/scripts/global_view.js?' . @filemtime(PUBLIC_PATH . '/scripts/global_view.js')));
+
+		try {
+			FreshRSS_Context::updateUsingRequest(true);
+		} catch (FreshRSS_Context_Exception) {
+			Minz_Error::error(404);
+		}
+
+		$this->view->categories = FreshRSS_Context::categories();
+
+		$this->view->rss_title = FreshRSS_Context::$name . ' | ' . FreshRSS_View::title();
+		$title = _t('index.feed.title_global');
+		if (FreshRSS_Context::$get_unread > 0) {
+			$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
+		}
+		FreshRSS_View::prependTitle($title . ' · ');
+
+		$this->_csp([
+			'default-src' => "'self'",
+			'frame-src' => '*',
+			'img-src' => '* data: blob:',
+			'frame-ancestors' => "'none'",
+			'media-src' => '*',
+		]);
 	}
 
 	// Handle AJAX request for a specific feed box
@@ -330,15 +367,30 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 			$id_min = (time() - (FreshRSS_Context::$sinceHours * 3600)) . '000000';
 		}
 
-		$continuation_value = 0;
+		$continuation_values = [];
 		if (FreshRSS_Context::$continuation_id !== '0') {
-			if (in_array(FreshRSS_Context::$sort, ['date', 'link', 'title'], true)) {
+			if (in_array(FreshRSS_Context::$sort, ['c.name', 'date', 'f.name', 'link', 'title'], true)) {
 				$pagingEntry = $entryDAO->searchById(FreshRSS_Context::$continuation_id);
-				$continuation_value = $pagingEntry === null ? 0 : match (FreshRSS_Context::$sort) {
+
+				if ($pagingEntry !== null && in_array(FreshRSS_Context::$sort, ['c.name', 'f.name'], true)) {
+					// We most likely already have the feed object in cache
+					$feed = FreshRSS_Category::findFeed(FreshRSS_Context::categories(), $pagingEntry->feedId());
+					if ($feed !== null) {
+						$pagingEntry->_feed($feed);
+					}
+				}
+
+				$continuation_values[] = $pagingEntry === null ? 0 : match (FreshRSS_Context::$sort) {
+					'c.name' => $pagingEntry->feed()?->category()?->name() ?? '',
 					'date' => $pagingEntry->date(true),
+					'f.name' => $pagingEntry->feed()?->name() ?? '',
 					'link' => $pagingEntry->link(true),
 					'title' => $pagingEntry->title(),
 				};
+				if ($pagingEntry !== null && FreshRSS_Context::$sort === 'c.name') {
+					// Secondary sort criterion
+					$continuation_values[] = $pagingEntry->feed()?->name() ?? '';
+				}
 			} elseif (FreshRSS_Context::$sort === 'rand') {
 				FreshRSS_Context::$continuation_id = '0';
 			}
@@ -347,7 +399,7 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		foreach ($entryDAO->listWhere(
 					$type, $id, FreshRSS_Context::$state, FreshRSS_Context::$search,
 					id_min: $id_min, id_max: FreshRSS_Context::$id_max, sort: FreshRSS_Context::$sort, order: FreshRSS_Context::$order,
-					continuation_id: FreshRSS_Context::$continuation_id, continuation_value: $continuation_value,
+					continuation_id: FreshRSS_Context::$continuation_id, continuation_values: $continuation_values,
 					limit: $postsPerPage ?? FreshRSS_Context::$number, offset: FreshRSS_Context::$offset) as $entry) {
 			yield $entry;
 		}

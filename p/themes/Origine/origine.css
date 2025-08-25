@@ -201,7 +201,7 @@ th {
 	margin-bottom: 0.25rem;
 }
 
-.form-group .group-controls label {
+.form-group .group-controls label:not(.btn) {
 	padding: 0;
 }
 
@@ -919,6 +919,12 @@ a:hover .icon {
 .content pre {
 	border: 1px solid var(--border-color);
 	border-radius: 3px;
+}
+
+.content pre code {
+	background: transparent;
+	color: var(--font-color);
+	border: none;
 }
 
 .content code {

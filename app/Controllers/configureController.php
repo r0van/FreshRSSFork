@@ -47,7 +47,10 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 		if (Minz_Request::isPost()) {
 			FreshRSS_Context::userConf()->language = Minz_Request::paramString('language') ?: 'en';
 			FreshRSS_Context::userConf()->timezone = Minz_Request::paramString('timezone');
-			FreshRSS_Context::userConf()->theme = Minz_Request::paramString('theme') ?: FreshRSS_Themes::$defaultTheme;
+			$theme = Minz_Request::paramString('theme') ?: FreshRSS_Themes::$defaultTheme;
+			if (FreshRSS_Themes::exists($theme)) {
+				FreshRSS_Context::userConf()->theme = $theme;
+			}
 			FreshRSS_Context::userConf()->darkMode = Minz_Request::paramString('darkMode') ?: 'auto';
 			FreshRSS_Context::userConf()->content_width = Minz_Request::paramString('content_width') ?: 'thin';
 			FreshRSS_Context::userConf()->topline_read = Minz_Request::paramBoolean('topline_read');
@@ -160,6 +163,7 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 			Minz_Request::good(_t('feedback.conf.updated'), [ 'c' => 'configure', 'a' => 'reading' ]);
 		}
 
+		$this->view->viewModes = FreshRSS_ViewMode::getAllModes();
 		FreshRSS_View::prependTitle(_t('conf.reading.title') . ' · ');
 	}
 
@@ -382,7 +386,7 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 		$this->view->tags = FreshRSS_Context::labels();
 
 		if (Minz_Request::isPost()) {
-			$params = array_filter(Minz_Request::paramArray('query'));
+			$params = Minz_Request::paramArray('query');
 			$queryParams = [];
 			$name = Minz_Request::paramString('name') ?: _t('conf.query.number', $id + 1);
 			if ('' === $name) {
@@ -499,7 +503,7 @@ class FreshRSS_configure_Controller extends FreshRSS_ActionController {
 
 		if (Minz_Request::isPost()) {
 			$limits = FreshRSS_Context::systemConf()->limits;
-			$limits['max_registrations'] = Minz_Request::paramInt('max-registrations') ?: 1;
+			$limits['max_registrations'] = Minz_Request::paramIntNull('max-registrations') ?? 1;
 			$limits['max_feeds'] = Minz_Request::paramInt('max-feeds') ?: 16384;
 			$limits['max_categories'] = Minz_Request::paramInt('max-categories') ?: 16384;
 			$limits['cookie_duration'] = Minz_Request::paramInt('cookie-duration') ?: FreshRSS_Auth::DEFAULT_COOKIE_DURATION;

@@ -21,6 +21,8 @@ class FreshRSS_Search implements \Stringable {
 	private ?array $entry_ids = null;
 	/** @var list<int>|null */
 	private ?array $feed_ids = null;
+	/** @var list<int>|null */
+	private ?array $category_ids = null;
 	/** @var list<int>|'*'|null */
 	private $label_ids = null;
 	/** @var list<string>|null */
@@ -62,6 +64,8 @@ class FreshRSS_Search implements \Stringable {
 	private ?array $not_entry_ids = null;
 	/** @var list<int>|null */
 	private ?array $not_feed_ids = null;
+	/** @var list<int>|null */
+	private ?array $not_category_ids = null;
 	/** @var list<int>|'*'|null */
 	private $not_label_ids = null;
 	/** @var list<string>|null */
@@ -107,6 +111,7 @@ class FreshRSS_Search implements \Stringable {
 
 		$input = $this->parseNotEntryIds($input);
 		$input = $this->parseNotFeedIds($input);
+		$input = $this->parseNotCategoryIds($input);
 		$input = $this->parseNotLabelIds($input);
 		$input = $this->parseNotLabelNames($input);
 
@@ -121,6 +126,7 @@ class FreshRSS_Search implements \Stringable {
 
 		$input = $this->parseEntryIds($input);
 		$input = $this->parseFeedIds($input);
+		$input = $this->parseCategoryIds($input);
 		$input = $this->parseLabelIds($input);
 		$input = $this->parseLabelNames($input);
 
@@ -163,6 +169,15 @@ class FreshRSS_Search implements \Stringable {
 	/** @return list<int>|null */
 	public function getNotFeedIds(): ?array {
 		return $this->not_feed_ids;
+	}
+
+	/** @return list<int>|null */
+	public function getCategoryIds(): ?array {
+		return $this->category_ids;
+	}
+	/** @return list<int>|null */
+	public function getNotCategoryIds(): ?array {
+		return $this->not_category_ids;
 	}
 
 	/** @return list<int>|'*'|null */
@@ -414,6 +429,42 @@ class FreshRSS_Search implements \Stringable {
 				$feed_ids = array_map('intval', $feed_ids);
 				if (!empty($feed_ids)) {
 					$this->not_feed_ids = array_merge($this->not_feed_ids, $feed_ids);
+				}
+			}
+		}
+		return $input;
+	}
+
+	private function parseCategoryIds(string $input): string {
+		if (preg_match_all('/\\bc:(?P<search>[0-9,]*)/', $input, $matches)) {
+			$input = str_replace($matches[0], '', $input);
+			$ids_lists = $matches['search'];
+			$this->category_ids = [];
+			foreach ($ids_lists as $ids_list) {
+				$category_ids = explode(',', $ids_list);
+				$category_ids = self::removeEmptyValues($category_ids);
+				/** @var list<int> $category_ids */
+				$category_ids = array_map('intval', $category_ids);
+				if (!empty($category_ids)) {
+					$this->category_ids = array_merge($this->category_ids, $category_ids);
+				}
+			}
+		}
+		return $input;
+	}
+
+	private function parseNotCategoryIds(string $input): string {
+		if (preg_match_all('/(?<=[\\s(]|^)[!-]c:(?P<search>[0-9,]*)/', $input, $matches)) {
+			$input = str_replace($matches[0], '', $input);
+			$ids_lists = $matches['search'];
+			$this->not_category_ids = [];
+			foreach ($ids_lists as $ids_list) {
+				$category_ids = explode(',', $ids_list);
+				$category_ids = self::removeEmptyValues($category_ids);
+				/** @var list<int> $category_ids */
+				$category_ids = array_map('intval', $category_ids);
+				if (!empty($category_ids)) {
+					$this->not_category_ids = array_merge($this->not_category_ids, $category_ids);
 				}
 			}
 		}

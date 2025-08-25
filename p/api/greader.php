@@ -28,6 +28,9 @@ Server-side API compatible with Google Reader API layer 2
 require(__DIR__ . '/../../constants.php');
 require(LIB_PATH . '/lib_rss.php');	//Includes class autoloader
 
+header("Content-Security-Policy: default-src 'none'; frame-ancestors 'none'; sandbox");
+header('X-Content-Type-Options: nosniff');
+
 if (PHP_INT_SIZE < 8) {	//32-bit
 	/** @return numeric-string */
 	function hex2dec(string $hex): string {
@@ -332,8 +335,6 @@ final class GReaderAPI {
 			self::internalServerError();
 		}
 		header('Content-Type: application/json; charset=UTF-8');
-		$faviconsUrl = Minz_Url::display('/f.php?', '', true);
-		$faviconsUrl = str_replace('/api/greader.php/reader/api/0/subscription', '', $faviconsUrl);	//Security if base_url is not set properly
 		$subscriptions = [];
 
 		$categoryDAO = FreshRSS_Factory::createCategoryDao();
@@ -352,7 +353,9 @@ final class GReaderAPI {
 					//'firstitemmsec' => 0,
 					'url' => htmlspecialchars_decode($feed->url(), ENT_QUOTES),
 					'htmlUrl' => htmlspecialchars_decode($feed->website(), ENT_QUOTES),
-					'iconUrl' => $faviconsUrl . $feed->hashFavicon(),
+					'iconUrl' => str_replace(
+						'/api/greader.php/reader/api/0/subscription', '',	// Security if base_url is not set properly
+						$feed->favicon(absolute: true)),
 				];
 			}
 		}
@@ -610,7 +613,7 @@ final class GReaderAPI {
 				}
 				break;
 		}
-		$streamId = (int)$streamId;
+		$streamId = is_numeric($streamId) ? (int)$streamId : 0;
 
 		$state = match ($filter_target) {
 			'user/-/state/com.google/read' => FreshRSS_Entry::STATE_READ,
@@ -712,8 +715,18 @@ final class GReaderAPI {
 		$type = 'A';
 		if ($streamId === 'user/-/state/com.google/reading-list') {
 			$type = 'A';
+			$streamId = '';
 		} elseif ($streamId === 'user/-/state/com.google/starred') {
 			$type = 's';
+			$streamId = '';
+		} elseif ($streamId === 'user/-/state/com.google/read') {
+			$filter_target = $streamId;
+			$type = 'A';
+			$streamId = '';
+		} elseif ($streamId === 'user/-/state/com.google/unread') {
+			$filter_target = $streamId;
+			$type = 'A';
+			$streamId = '';
 		} elseif (str_starts_with($streamId, 'feed/')) {
 			$type = 'f';
 			$streamId = substr($streamId, 5);
@@ -965,7 +978,13 @@ final class GReaderAPI {
 				}
 			}
 		} elseif ($streamId === 'user/-/state/com.google/reading-list') {
-			$entryDAO->markReadEntries($olderThanId, false);
+			$entryDAO->markReadEntries($olderThanId, onlyFavorites: false);
+		} elseif ($streamId === 'user/-/state/com.google/starred') {
+			$entryDAO->markReadEntries($olderThanId, onlyFavorites: true);
+		} elseif ($streamId === 'user/-/state/com.google/read') {
+			$entryDAO->markReadEntries($olderThanId, state: FreshRSS_Entry::STATE_READ);
+		} elseif ($streamId === 'user/-/state/com.google/unread') {
+			$entryDAO->markReadEntries($olderThanId, state: FreshRSS_Entry::STATE_NOT_READ);
 		} else {
 			self::badRequest();
 		}

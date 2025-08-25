@@ -367,6 +367,11 @@ class SearchTest extends PHPUnit\Framework\TestCase {
 				[1, 2, 3, 4, 5, 6, 7]
 			],
 			[
+				'c:1 OR c:2,3',
+				' (e.id_feed IN (SELECT f.id FROM `_feed` f WHERE f.category IN (?)) ) OR (e.id_feed IN (SELECT f.id FROM `_feed` f WHERE f.category IN (?,?)) ) ',
+				[1, 2, 3]
+			],
+			[
 				'#tag Hello OR (author:Alice inurl:example) OR (f:3 intitle:World) OR L:12',
 				" ((TRIM(e.tags) || ' #' LIKE ? AND (e.title LIKE ? OR e.content LIKE ?) )) OR ((e.author LIKE ? AND e.link LIKE ? )) OR" .
 					' ((e.id_feed IN (?) AND e.title LIKE ? )) OR ((e.id IN (SELECT et.id_entry FROM `_entrytag` et WHERE et.id_tag IN (?)) )) ',
