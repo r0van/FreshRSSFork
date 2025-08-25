@@ -115,43 +115,15 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		$this->normalAction();
 	}
 
-	/**
+		/**
 	 * This action displays the global view of FreshRSS.
 	 */
-	public function globalAction(): void {
+	 public function globalAction(): void {
 		$allow_anonymous = FreshRSS_Context::systemConf()->allow_anonymous;
 		if (!FreshRSS_Auth::hasAccess() && !$allow_anonymous) {
 			Minz_Request::forward(['c' => 'auth', 'a' => 'login']);
 			return;
 		}
-
-		FreshRSS_View::appendScript(Minz_Url::display('/scripts/extra.js?' . @filemtime(PUBLIC_PATH . '/scripts/extra.js')));
-		FreshRSS_View::appendScript(Minz_Url::display('/scripts/global_view.js?' . @filemtime(PUBLIC_PATH . '/scripts/global_view.js')));
-
-		try {
-			FreshRSS_Context::updateUsingRequest(true);
-		} catch (FreshRSS_Context_Exception) {
-			Minz_Error::error(404);
-		}
-
-		$this->view->categories = FreshRSS_Context::categories();
-
-		$this->view->rss_title = FreshRSS_Context::$name . ' | ' . FreshRSS_View::title();
-		$title = _t('index.feed.title_global');
-		if (FreshRSS_Context::$get_unread > 0) {
-			$title = '(' . FreshRSS_Context::$get_unread . ') ' . $title;
-		}
-		FreshRSS_View::prependTitle($title . ' · ');
-
-		$this->_csp([
-			'default-src' => "'self'",
-			'frame-src' => '*',
-			'img-src' => '* data: blob:',
-			'frame-ancestors' => "'none'",
-			'media-src' => '*',
-		]);
-	}
-
 	// Handle AJAX request for a specific feed box
 	if (Minz_Request::param('ajax') === '1' && Minz_Request::param('feed_id') !== null) {
 		$this->view->_layout(null);
@@ -208,9 +180,9 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		exit;
 	}
 
-	// Load layout as usual
+	// Load layout as usua
+	FreshRSS_View::appendScript(Minz_Url::display('/scripts/extra.js?' . @filemtime(PUBLIC_PATH . '/scripts/extra.js')));
 	FreshRSS_View::appendScript(Minz_Url::display('/scripts/global_view.js?' . @filemtime(PUBLIC_PATH . '/scripts/global_view.js')));
-	FreshRSS_View::appendScript(Minz_Url::display('/scripts/sortable.min.js?' . @filemtime(PUBLIC_PATH . '/scripts/sortable.min.js')));
 
 	try {
 		FreshRSS_Context::updateUsingRequest(true);
@@ -231,6 +203,7 @@ class FreshRSS_index_Controller extends FreshRSS_ActionController {
 		'default-src' => "'self'",
 		'frame-src' => '*',
 		'img-src' => '* data:',
+		'frame-ancestors' => "'none'",
 		'media-src' => '*',
 	]);
 }
